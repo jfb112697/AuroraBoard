@@ -97,7 +97,7 @@
             this.groupBox1.Controls.Add(this.Player1Name);
             this.groupBox1.Location = new System.Drawing.Point(12, 30);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(245, 158);
+            this.groupBox1.Size = new System.Drawing.Size(245, 111);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player 1";
@@ -180,9 +180,9 @@
             this.groupBox2.Controls.Add(this.Player2Sponsor);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.Player2Name);
-            this.groupBox2.Location = new System.Drawing.Point(263, 30);
+            this.groupBox2.Location = new System.Drawing.Point(342, 30);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(245, 158);
+            this.groupBox2.Size = new System.Drawing.Size(245, 111);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Player 2";
@@ -192,7 +192,7 @@
             this.FlagsComboP2.FormattingEnabled = true;
             this.FlagsComboP2.Location = new System.Drawing.Point(6, 98);
             this.FlagsComboP2.Name = "FlagsComboP2";
-            this.FlagsComboP2.Size = new System.Drawing.Size(121, 21);
+            this.FlagsComboP2.Size = new System.Drawing.Size(0, 21);
             this.FlagsComboP2.TabIndex = 8;
             this.FlagsComboP2.Visible = false;
             // 
@@ -264,7 +264,7 @@
             // 
             // SendUpdateButton
             // 
-            this.SendUpdateButton.Location = new System.Drawing.Point(454, 329);
+            this.SendUpdateButton.Location = new System.Drawing.Point(481, 329);
             this.SendUpdateButton.Name = "SendUpdateButton";
             this.SendUpdateButton.Size = new System.Drawing.Size(106, 23);
             this.SendUpdateButton.TabIndex = 8;
@@ -294,7 +294,7 @@
             this.groupBox3.Controls.Add(this.RoundNameTextbox);
             this.groupBox3.Location = new System.Drawing.Point(12, 194);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 100);
+            this.groupBox3.Size = new System.Drawing.Size(245, 100);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Tournament";
@@ -323,9 +323,9 @@
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.CasterTextbox);
             this.groupBox4.Controls.Add(this.StreamerTextbox);
-            this.groupBox4.Location = new System.Drawing.Point(263, 194);
+            this.groupBox4.Location = new System.Drawing.Point(348, 194);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 100);
+            this.groupBox4.Size = new System.Drawing.Size(239, 100);
             this.groupBox4.TabIndex = 13;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Misc";
@@ -357,14 +357,14 @@
             // 
             // StreamerTextbox
             // 
-            this.StreamerTextbox.Location = new System.Drawing.Point(6, 35);
+            this.StreamerTextbox.Location = new System.Drawing.Point(9, 35);
             this.StreamerTextbox.Name = "StreamerTextbox";
-            this.StreamerTextbox.Size = new System.Drawing.Size(100, 20);
+            this.StreamerTextbox.Size = new System.Drawing.Size(97, 20);
             this.StreamerTextbox.TabIndex = 9;
             // 
             // SettingsButton
             // 
-            this.SettingsButton.Location = new System.Drawing.Point(485, 226);
+            this.SettingsButton.Location = new System.Drawing.Point(400, 329);
             this.SettingsButton.Name = "SettingsButton";
             this.SettingsButton.Size = new System.Drawing.Size(75, 23);
             this.SettingsButton.TabIndex = 14;
@@ -378,7 +378,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(572, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(599, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -407,7 +407,7 @@
             // 
             // StartServer
             // 
-            this.StartServer.Location = new System.Drawing.Point(211, 329);
+            this.StartServer.Location = new System.Drawing.Point(319, 329);
             this.StartServer.Name = "StartServer";
             this.StartServer.Size = new System.Drawing.Size(75, 23);
             this.StartServer.TabIndex = 16;
@@ -426,7 +426,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(373, 329);
+            this.button1.Location = new System.Drawing.Point(261, 98);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 18;
@@ -436,7 +436,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(292, 329);
+            this.button2.Location = new System.Drawing.Point(263, 59);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 19;
@@ -448,7 +448,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 360);
+            this.ClientSize = new System.Drawing.Size(599, 360);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.UrlLinkLabel);

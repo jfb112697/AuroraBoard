@@ -256,5 +256,4 @@ namespace S3
             reset();
         }
     }
-    }
 }
