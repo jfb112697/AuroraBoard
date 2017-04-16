@@ -57,6 +57,36 @@ namespace S3
             Globals.CurrentInformationUpdate.Player1.flag = ((Flag) ((ComboboxItem) FlagsCombo.SelectedItem).Value);
             Globals.CurrentInformationUpdate.Player2.flag = ((Flag)((ComboboxItem)FlagsComboP2.SelectedItem).Value);
         }
+        private void switchPorts()
+        {
+            string p1name = Player1Name.Text;
+            string p2name = Player2Name.Text;
+            Player1Name.Text = p2name;
+            Player2Name.Text = p1name;
+
+            string p1char = Player1Character.Text;
+            string p2char = Player2Character.Text;
+            Player1Character.Text = p2char;
+            Player2Character.Text = p1char;
+
+            int p1score = Decimal.ToInt32(Player1Score.Value);
+            int p2score = Decimal.ToInt32(Player2Score.Value);
+            Player1Score.Value = p2score;
+            Player2Score.Value = p1score;
+
+            Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
+            Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
+            Globals.CurrentInformationUpdate.Player1.sponsor = (Sponsor)((ComboboxItem)Player1Sponsor.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player2.sponsor = (Sponsor)((ComboboxItem)Player2Sponsor.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
+            Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
+            Globals.CurrentInformationUpdate.tournamentName = tournamentNameTextbox.Text;
+            Globals.CurrentInformationUpdate.round = RoundNameTextbox.Text;
+            Globals.CurrentInformationUpdate.caster = CasterTextbox.Text;
+            Globals.CurrentInformationUpdate.streamer = StreamerTextbox.Text;
+        }
         private void parseComboBoxItems()
         {
             string file = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "characters.json");
@@ -208,5 +238,23 @@ namespace S3
         {
             Process.Start(UrlLinkLabel.Text);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            switchPorts();
+        }
+        private void reset()
+        {
+            Player1Score.Value = 0;
+            Player2Score.Value = 0;
+            Player1Name.Text = "";
+            Player2Name.Text = "";
+            RoundNameTextbox.Text = "";
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            reset();
+        }
+    }
     }
 }
