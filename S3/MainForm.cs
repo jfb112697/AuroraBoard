@@ -53,7 +53,7 @@ namespace S3
                         isMatch = true;
                     }
                 }
-                if (!isMatch)
+                if (!isMatch && Player1Name.Text != "" && Player2Name.Text != "")
                 {
                     sr.Close();
                     File.AppendAllText("names.txt", Player1Name.Text + Environment.NewLine);

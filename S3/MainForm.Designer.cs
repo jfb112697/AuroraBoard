@@ -79,9 +79,6 @@
             // 
             // Player1Name
             // 
-            this.Player1Name.AutoCompleteCustomSource.AddRange(new string[] {
-            "Test 1",
-            "Test 2"});
             this.Player1Name.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.Player1Name.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.Player1Name.Location = new System.Drawing.Point(6, 32);
