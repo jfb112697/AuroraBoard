@@ -79,10 +79,16 @@
             // 
             // Player1Name
             // 
+            this.Player1Name.AutoCompleteCustomSource.AddRange(new string[] {
+            "Test 1",
+            "Test 2"});
+            this.Player1Name.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Player1Name.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.Player1Name.Location = new System.Drawing.Point(6, 32);
             this.Player1Name.Name = "Player1Name";
             this.Player1Name.Size = new System.Drawing.Size(100, 20);
             this.Player1Name.TabIndex = 0;
+            this.Player1Name.TextChanged += new System.EventHandler(this.Player1Name_TextChanged);
             // 
             // groupBox1
             // 
@@ -257,6 +263,8 @@
             // 
             // Player2Name
             // 
+            this.Player2Name.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Player2Name.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.Player2Name.Location = new System.Drawing.Point(6, 32);
             this.Player2Name.Name = "Player2Name";
             this.Player2Name.Size = new System.Drawing.Size(100, 20);

@@ -39,9 +39,32 @@ namespace S3
             SendUpdate();
             
         }
-
         private void SendUpdate()
         {
+            using (StreamReader sr = File.OpenText("names.txt"))
+            {
+                string[] lines = File.ReadAllLines("names.txt");
+                bool isMatch = false;
+                for (int x = 0; x < lines.Length - 1; x++)
+                {
+                    if (Player1Name.Text == lines[x] || Player2Name.Text == lines[x])
+                    {
+                        sr.Close();
+                        isMatch = true;
+                    }
+                }
+                if (!isMatch)
+                {
+                    sr.Close();
+                    File.AppendAllText("names.txt", Player1Name.Text + Environment.NewLine);
+                    File.AppendAllText("names.txt", Player2Name.Text + Environment.NewLine);
+                }
+            }
+            string[] names = File.ReadAllLines("names.txt");
+
+            Player1Name.AutoCompleteCustomSource.AddRange(names);
+            Player2Name.AutoCompleteCustomSource.AddRange(names);
+
             Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
             Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
             Globals.CurrentInformationUpdate.Player1.sponsor = (Sponsor)((ComboboxItem)Player1Sponsor.SelectedItem).Value;
@@ -73,19 +96,7 @@ namespace S3
             int p2score = Decimal.ToInt32(Player2Score.Value);
             Player1Score.Value = p2score;
             Player2Score.Value = p1score;
-
-            Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
-            Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
-            Globals.CurrentInformationUpdate.Player1.sponsor = (Sponsor)((ComboboxItem)Player1Sponsor.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player2.sponsor = (Sponsor)((ComboboxItem)Player2Sponsor.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
-            Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
-            Globals.CurrentInformationUpdate.tournamentName = tournamentNameTextbox.Text;
-            Globals.CurrentInformationUpdate.round = RoundNameTextbox.Text;
-            Globals.CurrentInformationUpdate.caster = CasterTextbox.Text;
-            Globals.CurrentInformationUpdate.streamer = StreamerTextbox.Text;
+            SendUpdate();
         }
         private void parseComboBoxItems()
         {
@@ -254,6 +265,11 @@ namespace S3
         private void button1_Click(object sender, EventArgs e)
         {
             reset();
+        }
+
+        private void Player1Name_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
