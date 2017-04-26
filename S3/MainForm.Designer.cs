@@ -191,6 +191,7 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Player 2";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // FlagsComboP2
             // 
@@ -491,7 +492,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "6";
+            this.Text = "WorldStar Scoreboard";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

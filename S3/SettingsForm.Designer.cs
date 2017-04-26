@@ -134,11 +134,12 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 103);
+            this.label2.Location = new System.Drawing.Point(9, 103);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.Size = new System.Drawing.Size(145, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Smash.gg URL";
+            this.label2.Text = "Smash.gg Tournament Name";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // SettingsForm
             // 

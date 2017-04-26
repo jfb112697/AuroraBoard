@@ -40,9 +40,9 @@ namespace S3
         private void SendUpdateButton_Click(object sender, EventArgs e)
         {
             SendUpdate();
-            
+
         }
-        private void SendUpdate()
+        private void updateName(string name)
         {
             using (StreamReader sr = File.OpenText("names.txt"))
             {
@@ -63,6 +63,11 @@ namespace S3
                     File.AppendAllText("names.txt", Player2Name.Text + Environment.NewLine);
                 }
             }
+        }
+        private void SendUpdate()
+        {
+            updateName(Player1Name.Text);
+            updateName(Player2Name.Text);
             string[] names = File.ReadAllLines("names.txt");
 
             Player1Name.AutoCompleteCustomSource.AddRange(names);
@@ -206,16 +211,23 @@ namespace S3
         private void getParticipants()
         {
             string smashgg = Globals.settings.smashgg;
-            if(smashgg == "")
+            if(smashgg == null)
             {
                 return;
             }
             else
             {
-                //string url = smashgg + "?expand[0]=participants";
-                var json = new WebClient().DownloadString(smashgg);
-                Participant data = JsonConvert.DeserializeObject<Participant>(json);
-                MessageBox.Show(data.gamerTag);
+                string url = "https://api.smash.gg/tournament/" + smashgg + "?expand[0]=participants";
+                var json = new WebClient().DownloadString(url);
+                RootObject data = JsonConvert.DeserializeObject<RootObject>(json);
+                var participants = data.entities.participants;
+                foreach (var participant in participants) {
+                    string tag = (participant.gamerTag);
+                    File.AppendAllText("names.txt", tag + Environment.NewLine);
+                    Console.WriteLine(tag);
+                }
+
+
             }
         }
         private bool isServerUp = false;
@@ -298,6 +310,11 @@ namespace S3
         {
             Player2Score.Value = Decimal.ToInt32(Player2Score.Value) + 1;
             SendUpdate();
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
