@@ -47,6 +47,7 @@ namespace S3
             Globals.settings.serverPort = Convert.ToInt32(ServerPortbox.Value);
             Globals.settings.tintColor = ColorTextBox.Text;
             Globals.settings.tintEnabled = TintingEnableCheckbox.Checked;
+            Globals.settings.smashgg = smashgg.Text;
             Close();
         }
 

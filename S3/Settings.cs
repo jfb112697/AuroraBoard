@@ -12,5 +12,7 @@ namespace S3
         public string tintColor = "#FFF";
         public int serverPort = 8081;
         public InformationUpdate streamData;
+
+        public string smashgg { get; internal set; }
     }
 }

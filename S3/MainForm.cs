@@ -12,6 +12,9 @@ using System.IO;
 using ImageMagick;
 using Nancy.Hosting.Self;
 using Newtonsoft.Json;
+using System.Net;
+using static S3.smashgg;
+
 namespace S3
 {
     public partial class MainForm : Form
@@ -200,12 +203,24 @@ namespace S3
             CasterTextbox.Text = Globals.settings.streamData.caster;
             SendUpdate();
         }
+        private void getParticipants()
+        {
+            string smashgg = Globals.settings.smashgg;
+            if(smashgg == "")
+            {
+                return;
+            }
+            else
+            {
+                //string url = smashgg + "?expand[0]=participants";
+                var json = new WebClient().DownloadString(smashgg);
+                Participant data = JsonConvert.DeserializeObject<Participant>(json);
+                MessageBox.Show(data.gamerTag);
+            }
+        }
         private bool isServerUp = false;
         private void StartServer_Click(object sender, EventArgs e)
-        {
-
-
-            
+        {            
             if (isServerUp)
             {
                 hostg.Stop();
@@ -214,6 +229,7 @@ namespace S3
             }
             else
             {
+                getParticipants();
                 if (Globals.settings.tintEnabled)
                 {
                     foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Content/html/img")))
@@ -270,6 +286,18 @@ namespace S3
         private void Player1Name_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Player1Score.Value = Decimal.ToInt32(Player1Score.Value) + 1;
+            SendUpdate();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Player2Score.Value = Decimal.ToInt32(Player2Score.Value) + 1;
+            SendUpdate();
         }
     }
 }

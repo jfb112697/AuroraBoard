@@ -36,6 +36,8 @@
             this.TintingEnableCheckbox = new System.Windows.Forms.CheckBox();
             this.OkButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.smashgg = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerPortbox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -47,7 +49,7 @@
             this.groupBox1.Controls.Add(this.ServerPortbox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(134, 58);
+            this.groupBox1.Size = new System.Drawing.Size(134, 73);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ports";
@@ -104,7 +106,7 @@
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(12, 91);
+            this.OkButton.Location = new System.Drawing.Point(12, 149);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 2;
@@ -114,7 +116,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(93, 91);
+            this.CancelButton.Location = new System.Drawing.Point(88, 149);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 3;
@@ -122,11 +124,29 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // smashgg
+            // 
+            this.smashgg.Location = new System.Drawing.Point(165, 100);
+            this.smashgg.Name = "smashgg";
+            this.smashgg.Size = new System.Drawing.Size(84, 20);
+            this.smashgg.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(80, 103);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Smash.gg URL";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 117);
+            this.ClientSize = new System.Drawing.Size(268, 180);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.smashgg);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.groupBox2);
@@ -141,6 +161,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -154,5 +175,7 @@
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.TextBox ColorTextBox;
+        private System.Windows.Forms.TextBox smashgg;
+        private System.Windows.Forms.Label label2;
     }
 }
