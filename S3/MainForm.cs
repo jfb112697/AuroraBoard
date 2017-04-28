@@ -14,27 +14,80 @@ using Nancy.Hosting.Self;
 using Newtonsoft.Json;
 using System.Net;
 using static S3.smashgg;
+using OBSWebsocketDotNet;
+using System.Threading;
 
 namespace S3
 {
     public partial class MainForm : Form
     {
+        protected OBSWebsocket _obs;
         private NancyHost hostg;
         public MainForm()
         {
             InitializeComponent();
+
+            _obs = new OBSWebsocket();
             Globals.CurrentInformationUpdate = new InformationUpdate();
             Globals.CurrentInformationUpdate.Player1 = new Player();
             Globals.CurrentInformationUpdate.Player2 = new Player();
             Globals.CurrentInformationUpdate.Player1.name = "EIREXE";
             Globals.CurrentInformationUpdate.Player2.name = "BoastingToast";
+            Globals.CurrentInformationUpdate.isEmpty = true;
             parseComboBoxItems();
-            SendUpdate();
+            _obs.OnRecordingStateChange += onRecordingStateChange;
+            try
+            {
+                _obs.Connect("ws://127.0.0.1:4444", "password");
+            }
+            catch (AuthFailureException)
+            {
+                MessageBox.Show("Authentication failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            catch (ErrorResponseException ex)
+            {
+                MessageBox.Show("Connect failed : " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void onRecordingStateChange(OBSWebsocket sender, OutputState newState)
         {
+            string state = "";
+            switch (newState)
+            {
+                case OutputState.Starting:
+                    state = "Recording starting...";
+                    btnToggleRecording.Text = state;
+                    break;
 
+                case OutputState.Started:
+                    state = "Stop recording";
+                    btnToggleRecording.Text = state;
+                    break;
+
+                case OutputState.Stopping:
+                    state = "Recording stopping...";
+                    btnToggleRecording.Text = state;
+                    break;
+
+                case OutputState.Stopped:
+                    state = "Start recording";
+                    btnToggleRecording.Text = state;
+                    break;
+
+                default:
+                    state = "State unknown";
+                    btnToggleRecording.Text = state;
+                    break;
+            }
+            
+
+            BeginInvoke((MethodInvoker)delegate
+            {
+                btnToggleRecording.Text = state;
+            });
         }
 
         private void SendUpdateButton_Click(object sender, EventArgs e)
@@ -66,6 +119,10 @@ namespace S3
         }
         private void SendUpdate()
         {
+            if (Globals.CurrentInformationUpdate.isEmpty == true)
+            {
+                _obs.ToggleRecording();
+            }
             updateName(Player1Name.Text);
             updateName(Player2Name.Text);
             string[] names = File.ReadAllLines("names.txt");
@@ -87,6 +144,10 @@ namespace S3
             Globals.CurrentInformationUpdate.streamer = StreamerTextbox.Text;
             Globals.CurrentInformationUpdate.Player1.flag = ((Flag) ((ComboboxItem) FlagsCombo.SelectedItem).Value);
             Globals.CurrentInformationUpdate.Player2.flag = ((Flag)((ComboboxItem)FlagsComboP2.SelectedItem).Value);
+            if (Player1Name.Text != null || Player2Name.Text != null)
+            {
+                Globals.CurrentInformationUpdate.isEmpty = false;
+            }
         }
         private void switchPorts()
         {
@@ -284,15 +345,29 @@ namespace S3
         }
         private void reset()
         {
+            var delay = Task.Delay(1000).ContinueWith(_ =>
+            {            
+            var directory = new DirectoryInfo("recordings");
+            string myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First().Name;
+            string newname = Globals.CurrentInformationUpdate.Player1.name + " " + Globals.CurrentInformationUpdate.Player2.name + " " + " " + Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.round + ".mp4";
+            System.IO.File.Move("recordings/" + myFile, "recordings/" + newname);
+            MessageBox.Show(myFile + Environment.NewLine + newname);
+            });
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
             Player1Score.Value = 0;
             Player2Score.Value = 0;
             Player1Name.Text = "";
             Player2Name.Text = "";
             RoundNameTextbox.Text = "";
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            reset();
+            if (btnToggleRecording.Text == "Stop recording")
+            {
+                _obs.ToggleRecording();
+            }
+            Globals.CurrentInformationUpdate.isEmpty = true;
+            Thread resetThread = new Thread(reset);
+            resetThread.Start();
         }
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
@@ -315,6 +390,18 @@ namespace S3
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MainWindow obswindow = new MainWindow();
+            obswindow.ShowDialog();
+        }
+
+        private void btnToggleRecording_Click(object sender, EventArgs e)
+        {
+            _obs.ToggleRecording();
+            btnToggleRecording.Hide();
         }
     }
 }

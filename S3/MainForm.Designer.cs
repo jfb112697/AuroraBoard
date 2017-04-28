@@ -70,6 +70,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.btnToggleRecording = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Player1Score)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -454,7 +456,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(182, 155);
+            this.button3.Location = new System.Drawing.Point(176, 155);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 20;
@@ -464,7 +466,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(348, 155);
+            this.button4.Location = new System.Drawing.Point(357, 155);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 21;
@@ -472,11 +474,33 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(238, 329);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 22;
+            this.button6.Text = "Show OBS Controls";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // btnToggleRecording
+            // 
+            this.btnToggleRecording.Location = new System.Drawing.Point(138, 329);
+            this.btnToggleRecording.Name = "btnToggleRecording";
+            this.btnToggleRecording.Size = new System.Drawing.Size(94, 23);
+            this.btnToggleRecording.TabIndex = 23;
+            this.btnToggleRecording.Text = "Start Recording";
+            this.btnToggleRecording.UseVisualStyleBackColor = true;
+            this.btnToggleRecording.Click += new System.EventHandler(this.btnToggleRecording_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(599, 360);
+            this.Controls.Add(this.btnToggleRecording);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -493,7 +517,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "WorldStar Scoreboard";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Player1Score)).EndInit();
@@ -555,6 +578,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnToggleRecording;
     }
 }
 
