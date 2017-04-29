@@ -123,6 +123,7 @@ namespace S3
             {
                 _obs.ToggleRecording();
             }
+
             updateName(Player1Name.Text);
             updateName(Player2Name.Text);
             string[] names = File.ReadAllLines("names.txt");
@@ -165,7 +166,16 @@ namespace S3
             int p2score = Decimal.ToInt32(Player2Score.Value);
             Player1Score.Value = p2score;
             Player2Score.Value = p1score;
-            SendUpdate();
+
+
+            Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
+            Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
+
+            Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
+
+            Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
+            Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
         }
         private void parseComboBoxItems()
         {
@@ -349,9 +359,11 @@ namespace S3
             {            
             var directory = new DirectoryInfo("recordings");
             string myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First().Name;
-            string newname = Globals.CurrentInformationUpdate.Player1.name + " " + Globals.CurrentInformationUpdate.Player2.name + " " + " " + Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.round + ".mp4";
+            string newname = Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.round + ".mp4";
             System.IO.File.Move("recordings/" + myFile, "recordings/" + newname);
             MessageBox.Show(myFile + Environment.NewLine + newname);
+                string description = "Super Smash Bros. Melee tournament " + Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name;
+                string videoName = Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.tournamentName;
             });
         }
         private void button1_Click(object sender, EventArgs e)
@@ -401,7 +413,13 @@ namespace S3
         private void btnToggleRecording_Click(object sender, EventArgs e)
         {
             _obs.ToggleRecording();
+            btnToggleRecording.Text = "Stop recording";
             btnToggleRecording.Hide();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
