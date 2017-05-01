@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="ComboboxItem.cs" />
+    <Compile Include="GroupsData.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,7 +112,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="Recorder.cs" />
+    <Compile Include="SetData.cs" />
     <Compile Include="smashgg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +127,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sponsor.cs" />
+    <Compile Include="Ticker.cs" />
     <Compile Include="UploadVideo.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

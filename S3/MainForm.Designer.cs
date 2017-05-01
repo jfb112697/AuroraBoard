@@ -72,6 +72,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.btnToggleRecording = new System.Windows.Forms.Button();
+            this.showSets = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Player1Score)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -388,7 +389,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(599, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(618, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -494,11 +495,22 @@
             this.btnToggleRecording.UseVisualStyleBackColor = true;
             this.btnToggleRecording.Click += new System.EventHandler(this.btnToggleRecording_Click);
             // 
+            // showSets
+            // 
+            this.showSets.Location = new System.Drawing.Point(260, 242);
+            this.showSets.Name = "showSets";
+            this.showSets.Size = new System.Drawing.Size(82, 23);
+            this.showSets.TabIndex = 24;
+            this.showSets.Text = "Show Sets";
+            this.showSets.UseVisualStyleBackColor = true;
+            this.showSets.Click += new System.EventHandler(this.showSets_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 360);
+            this.ClientSize = new System.Drawing.Size(618, 361);
+            this.Controls.Add(this.showSets);
             this.Controls.Add(this.btnToggleRecording);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
@@ -582,6 +594,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btnToggleRecording;
+        private System.Windows.Forms.Button showSets;
     }
 }
 

@@ -79,7 +79,7 @@
             // 
             this.groupBox2.Controls.Add(this.ColorTextBox);
             this.groupBox2.Controls.Add(this.TintingEnableCheckbox);
-            this.groupBox2.Location = new System.Drawing.Point(152, 12);
+            this.groupBox2.Location = new System.Drawing.Point(169, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(97, 73);
             this.groupBox2.TabIndex = 1;
@@ -126,7 +126,7 @@
             // 
             // smashgg
             // 
-            this.smashgg.Location = new System.Drawing.Point(165, 100);
+            this.smashgg.Location = new System.Drawing.Point(181, 100);
             this.smashgg.Name = "smashgg";
             this.smashgg.Size = new System.Drawing.Size(84, 20);
             this.smashgg.TabIndex = 4;
@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(268, 180);
+            this.ClientSize = new System.Drawing.Size(278, 182);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.smashgg);
             this.Controls.Add(this.CancelButton);

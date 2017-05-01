@@ -24,6 +24,7 @@ namespace S3
         public string caster;
         public string streamer;
         internal bool isEmpty;
+        public string ticker;
     }
 
     public class Player

@@ -36,20 +36,7 @@ namespace S3
             Globals.CurrentInformationUpdate.isEmpty = true;
             parseComboBoxItems();
             _obs.OnRecordingStateChange += onRecordingStateChange;
-            try
-            {
-                _obs.Connect("ws://127.0.0.1:4444", "password");
-            }
-            catch (AuthFailureException)
-            {
-                MessageBox.Show("Authentication failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            catch (ErrorResponseException ex)
-            {
-                MessageBox.Show("Connect failed : " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
+
         }
 
         private void onRecordingStateChange(OBSWebsocket sender, OutputState newState)
@@ -119,9 +106,9 @@ namespace S3
         }
         private void SendUpdate()
         {
-            if (Globals.CurrentInformationUpdate.isEmpty == true)
+            if (Globals.CurrentInformationUpdate.isEmpty == true && btnToggleRecording.Text == "Stop recording")
             {
-                _obs.ToggleRecording();
+               _obs.ToggleRecording();
             }
 
             updateName(Player1Name.Text);
@@ -279,6 +266,7 @@ namespace S3
             CasterTextbox.Text = Globals.settings.streamData.caster;
             SendUpdate();
         }
+        public static Dictionary<int?, string> entranthash = new Dictionary<int?, string>();
         private void getParticipants()
         {
             string smashgg = Globals.settings.smashgg;
@@ -288,14 +276,26 @@ namespace S3
             }
             else
             {
-                string url = "https://api.smash.gg/tournament/" + smashgg + "?expand[0]=participants";
+                string url = "https://api.smash.gg/tournament/" + smashgg + "?expand[0]=entrants";
                 var json = new WebClient().DownloadString(url);
                 RootObject data = JsonConvert.DeserializeObject<RootObject>(json);
-                var participants = data.entities.participants;
-                foreach (var participant in participants) {
-                    string tag = (participant.gamerTag);
+                var players = data.entities.player;
+                foreach (var player in players) {
+                    string tag = (player.gamerTag);
+                    string entrantid = (player.entrantId);
+                    int? entrantkey = Int32.Parse(entrantid);
                     File.AppendAllText("names.txt", tag + Environment.NewLine);
-                    Console.WriteLine(tag);
+                    try
+                    {
+                        entranthash.Add(entrantkey, tag);
+                    }
+                    catch (Exception e)
+                    {
+                        entrantkey = entrantkey + 1000;
+                        entranthash.Add(entrantkey, tag);
+
+                    }
+                        File.AppendAllText("ticker.txt", entrantkey + Environment.NewLine);
                 }
 
 
@@ -406,10 +406,24 @@ namespace S3
 
         private void button6_Click(object sender, EventArgs e)
         {
+            btnToggleRecording.Show();
+            try
+            {
+                _obs.Connect("ws://127.0.0.1:4444", "password");
+            }
+            catch (AuthFailureException)
+            {
+                MessageBox.Show("Authentication failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            catch (ErrorResponseException ex)
+            {
+                MessageBox.Show("Connect failed : " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             MainWindow obswindow = new MainWindow();
             obswindow.ShowDialog();
         }
-
         private void btnToggleRecording_Click(object sender, EventArgs e)
         {
             _obs.ToggleRecording();
@@ -420,6 +434,23 @@ namespace S3
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void showSets_Click(object sender, EventArgs e)
+        {
+            if (Globals.settings.smashgg != null)
+            {
+                Ticker.Ticker.GetSets();
+                int length = Ticker.Ticker.matches.Count();
+                for(int i = length - 10; i < length; i++)
+                {
+                    Globals.CurrentInformationUpdate.ticker = Globals.CurrentInformationUpdate.ticker + Ticker.Ticker.matches[i];
+                }
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }
