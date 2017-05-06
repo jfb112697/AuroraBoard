@@ -442,10 +442,11 @@ namespace S3
             {
                 Ticker.Ticker.GetSets();
                 int length = Ticker.Ticker.matches.Count();
-                for(int i = length - 10; i < length; i++)
-                {
-                    Globals.CurrentInformationUpdate.ticker = Globals.CurrentInformationUpdate.ticker + Ticker.Ticker.matches[i];
-                }
+                Globals.CurrentInformationUpdate.ticker1 = Ticker.Ticker.matches[length - 1];
+                Globals.CurrentInformationUpdate.ticker2 = Ticker.Ticker.matches[length - 2];
+                Globals.CurrentInformationUpdate.ticker3 = Ticker.Ticker.matches[length - 3];
+                Globals.CurrentInformationUpdate.ticker4 = Ticker.Ticker.matches[length - 4];
+                Globals.CurrentInformationUpdate.ticker5 = Ticker.Ticker.matches[length - 5];
             }
             else
             {

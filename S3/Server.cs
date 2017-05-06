@@ -24,7 +24,11 @@ namespace S3
         public string caster;
         public string streamer;
         internal bool isEmpty;
-        public string ticker;
+        public string ticker1;
+        public string ticker2;
+        public string ticker3;
+        public string ticker4;
+        public string ticker5;
     }
 
     public class Player

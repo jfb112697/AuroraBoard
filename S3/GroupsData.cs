@@ -80,6 +80,7 @@ namespace Ticker
             public List<object> images { get; set; }
             public int scheduleId { get; set; }
             public object platform { get; set; }
+            public object requiresVerification { get; set; }
             public List<string> expand { get; set; }
             public string typeDisplayStr { get; set; }
         }
@@ -96,12 +97,12 @@ namespace Ticker
             public string displayIdentifier { get; set; }
             public int state { get; set; }
             public object tiebreakOrder { get; set; }
-            public bool? tiebreaks { get; set; }
+            public object tiebreaks { get; set; }
             public object bestOf { get; set; }
             public int setsOnDeck { get; set; }
             public int rematchSeconds { get; set; }
             public bool finalized { get; set; }
-            public int? winnersTargetPhaseId { get; set; }
+            public object winnersTargetPhaseId { get; set; }
             public int numProgressing { get; set; }
             public object losersTargetPhaseId { get; set; }
             public object startAt { get; set; }

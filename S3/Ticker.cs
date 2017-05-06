@@ -50,7 +50,16 @@ namespace Ticker
             {
                 string p1tag = S3.MainForm.entranthash[p1];
                 string p2tag = S3.MainForm.entranthash[p2];
-                matches.Add(p1tag + " - " + score1 + " " + p2tag + " - " + score2 + " | ");
+                if (winner == 1)
+                {
+
+                    matches.Add("<div class=\"left\"><b><div class=\"score1\">" + score1 + "</div> <div class=\"tag1\">" + p1tag + "</div></b></div> <div class=\"right\"><div class=\"tag2\"><p>" + p2tag + "</p></div> <div class=\"score2\"><p>" + score2 + "</p></div></div>");
+                }
+                else
+                {
+                    matches.Add("<div class=\"left\"><div class=\"score1\">" + score2 + "</div> <div class=\"tag1\">" + p2tag + "</div></b></div> <div class=\"right\"><div class=\"tag2\"><p>" + p1tag + "</p></div> <div class=\"score2\"><p>" + score1 + "</p></div></div>");
+                }
+
             }
             catch (KeyNotFoundException e){
                 return;
