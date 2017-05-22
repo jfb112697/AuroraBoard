@@ -8,16 +8,46 @@ function updateInformation()
 {
 	$.get('http://127.0.0.1:8081/getCurrentValues', function (json) {
 		//player names
-		$('#player1Text').text(json.Player1.name);
-		$('#player2Text').text(json.Player2.name);
+		if($('#player1Text').text() !== json.Player1.name){
+			$('#player1Text').fadeOut(function(){
+				$('#player1Text').text(json.Player1.name);
+				$('#player1Text').fadeIn();
+			});
+		}
+		if($('#player2Text').text() !== json.Player2.name){
+			$('#player2Text').fadeOut(function(){
+				$('#player2Text').text(json.Player2.name);
+				$('#player2Text').fadeIn();
+			});
+		}
+		//$('#player1Text').text(json.Player1.name);
+		//$('#player2Text').text(json.Player2.name);
 		//scores
-		$('#player1Score').text(json.Player1.score.toString());
-		$('#player2Score').text(json.Player2.score.toString());
+		if($('#player1Score').text() !== json.Player1.score.toString()){
+			$('#player1Score').fadeOut(function(){
+				$('#player1Score').text(json.Player1.score.toString());
+				$('#player1Score').fadeIn();
+			});
+		}
+		if($('#player2Score').text() !== json.Player2.score.toString()){
+			$('#player2Score').fadeOut(function(){
+				$('#player2Score').text(json.Player2.score.toString());
+				$('#player2Score').fadeIn();
+			});
+		}
+		//$('#player1Score').text(json.Player1.score.toString());
+		//$('#player2Score').text(json.Player2.score.toString());
 		//sponsors
 		$("#sponsorImgP1").attr('src', json.Player1.SponsorIcon);
 		$("#sponsorImgP2").attr('src', json.Player2.SponsorIcon);
 		//topbar
-		$("#round").text(json.round);
+		if($('#round').text() !== json.round){
+			$('#round').fadeOut(function(){
+				$("#round").text(json.round);
+				$('#round').fadeIn();
+			});
+		}
+		//$("#round").text(json.round);
 		$("#tournamentName").text(json.tournamentName);
 		//information bar
 		$("#casterText").text(json.caster);

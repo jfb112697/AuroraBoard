@@ -73,6 +73,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.btnToggleRecording = new System.Windows.Forms.Button();
             this.showSets = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.twitchClip = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Player1Score)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -389,7 +391,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(618, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(606, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -505,11 +507,29 @@
             this.showSets.UseVisualStyleBackColor = true;
             this.showSets.Click += new System.EventHandler(this.showSets_Click);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(135, 376);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(90, 13);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Twitch Clip Name";
+            // 
+            // twitchClip
+            // 
+            this.twitchClip.Location = new System.Drawing.Point(238, 373);
+            this.twitchClip.Name = "twitchClip";
+            this.twitchClip.Size = new System.Drawing.Size(84, 20);
+            this.twitchClip.TabIndex = 26;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 361);
+            this.ClientSize = new System.Drawing.Size(606, 405);
+            this.Controls.Add(this.twitchClip);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.showSets);
             this.Controls.Add(this.btnToggleRecording);
             this.Controls.Add(this.button6);
@@ -595,6 +615,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btnToggleRecording;
         private System.Windows.Forms.Button showSets;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox twitchClip;
     }
 }
 

@@ -62,5 +62,9 @@ namespace S3
 
         }
 
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
+
         }
+    }
     }

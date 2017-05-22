@@ -84,8 +84,8 @@ namespace Ticker
             public bool isLast { get; set; }
             public bool isGF { get; set; }
             public bool hasPlaceholder { get; set; }
-            public bool entrant1Present { get; set; }
-            public bool entrant2Present { get; set; }
+            public bool? entrant1Present { get; set; }
+            public bool? entrant2Present { get; set; }
             public object adminViewedBy { get; set; }
             public object adminMessagedBy { get; set; }
             public object tasksPruned { get; set; }
@@ -116,8 +116,8 @@ namespace Ticker
             public string midRoundText { get; set; }
             public string shortRoundText { get; set; }
             public int? roundDivision { get; set; }
-            public string entrant2PrereqStr { get; set; }
             public string entrant1PrereqStr { get; set; }
+            public string entrant2PrereqStr { get; set; }
         }
 
         public class Entities

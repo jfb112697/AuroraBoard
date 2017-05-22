@@ -29,6 +29,7 @@ namespace S3
         public string ticker3;
         public string ticker4;
         public string ticker5;
+        public string twitchclip;
     }
 
     public class Player

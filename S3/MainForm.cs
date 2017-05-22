@@ -110,6 +110,7 @@ namespace S3
             {
                _obs.ToggleRecording();
             }
+            Globals.CurrentInformationUpdate.twitchclip = "https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed";
 
             updateName(Player1Name.Text);
             updateName(Player2Name.Text);
@@ -446,7 +447,7 @@ namespace S3
                 Globals.CurrentInformationUpdate.ticker2 = Ticker.Ticker.matches[length - 2];
                 Globals.CurrentInformationUpdate.ticker3 = Ticker.Ticker.matches[length - 3];
                 Globals.CurrentInformationUpdate.ticker4 = Ticker.Ticker.matches[length - 4];
-                Globals.CurrentInformationUpdate.ticker5 = Ticker.Ticker.matches[length - 5];
+                //Globals.CurrentInformationUpdate.ticker5 = Ticker.Ticker.matches[length - 5];
             }
             else
             {

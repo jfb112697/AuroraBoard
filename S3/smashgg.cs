@@ -32,13 +32,25 @@ public class smashgg
             public PhoneNumber phoneNumber { get; set; }
         }
 
+        public class Seeding
+        {
+            public bool __invalid_name__130173 { get; set; }
+            public bool __invalid_name__130174 { get; set; }
+        }
+
+        public class Bracket
+        {
+            public bool __invalid_name__130173 { get; set; }
+            public bool __invalid_name__130174 { get; set; }
+        }
+
         public class Publishing
         {
             public bool publish { get; set; }
             public bool registration { get; set; }
             public bool attendees { get; set; }
-            public List<object> seeding { get; set; }
-            public bool bracket { get; set; }
+            public Seeding seeding { get; set; }
+            public Bracket bracket { get; set; }
             public bool live { get; set; }
             public bool fantasy { get; set; }
             public bool testmode { get; set; }
@@ -59,11 +71,6 @@ public class smashgg
             public object uploadedBy { get; set; }
             public object createdAt { get; set; }
             public object updatedAt { get; set; }
-        }
-
-        public class TaskEvents
-        {
-            public bool __invalid_name__32070 { get; set; }
         }
 
         public class Tournament
@@ -96,8 +103,8 @@ public class smashgg
             public object registrationClosesAt { get; set; }
             public object eventRegistrationClosesAt { get; set; }
             public object teamCreationClosesAt { get; set; }
-            public string stripeMode { get; set; }
-            public string paypalMode { get; set; }
+            public object stripeMode { get; set; }
+            public object paypalMode { get; set; }
             public string paypalApp { get; set; }
             public object city { get; set; }
             public string addrState { get; set; }
@@ -110,7 +117,7 @@ public class smashgg
             public string venueName { get; set; }
             public string venueAddress { get; set; }
             public int region { get; set; }
-            public string hashtag { get; set; }
+            public object hashtag { get; set; }
             public object showCity { get; set; }
             public int attendeeLocationInfo { get; set; }
             public int attendeeContactInfo { get; set; }
@@ -120,10 +127,10 @@ public class smashgg
             public bool publicAttendees { get; set; }
             public bool hideAdmins { get; set; }
             public object videoUrl { get; set; }
-            public string details { get; set; }
+            public object details { get; set; }
             public object registrationMarkdown { get; set; }
-            public string gettingThere { get; set; }
-            public object prizes { get; set; }
+            public object gettingThere { get; set; }
+            public string prizes { get; set; }
             public object rules { get; set; }
             public object contactInfo { get; set; }
             public bool includeInstructions { get; set; }
@@ -134,13 +141,13 @@ public class smashgg
             public object qrCodeRedirect { get; set; }
             public object emailNote { get; set; }
             public bool includeNote { get; set; }
-            public string contactEmail { get; set; }
-            public string contactTwitter { get; set; }
+            public object contactEmail { get; set; }
+            public object contactTwitter { get; set; }
             public object contactPhone { get; set; }
             public string currency { get; set; }
             public object onsitePaymentMode { get; set; }
-            public string stripePublishableKey { get; set; }
-            public string paypalPayerId { get; set; }
+            public object stripePublishableKey { get; set; }
+            public object paypalPayerId { get; set; }
             public object customEmailText { get; set; }
             public List<object> registrationOptions { get; set; }
             public List<object> limitsByType { get; set; }
@@ -156,8 +163,7 @@ public class smashgg
             public List<object> userData { get; set; }
             public string regionDisplayName { get; set; }
             public List<object> onlineEvents { get; set; }
-            public bool hasTaskEvents { get; set; }
-            public TaskEvents taskEvents { get; set; }
+            public List<object> taskEvents { get; set; }
             public List<string> slugs { get; set; }
             public string permissionType { get; set; }
             public bool supportsPayPal { get; set; }
@@ -165,82 +171,118 @@ public class smashgg
 
         public class PlayerIds
         {
-            public int __invalid_name__730320 { get; set; }
-            public int? __invalid_name__735186 { get; set; }
-            public int? __invalid_name__738378 { get; set; }
-            public int? __invalid_name__751169 { get; set; }
-            public int? __invalid_name__752689 { get; set; }
-            public int? __invalid_name__753770 { get; set; }
-            public int? __invalid_name__753806 { get; set; }
-            public int? __invalid_name__754760 { get; set; }
-            public int? __invalid_name__755536 { get; set; }
-            public int? __invalid_name__755678 { get; set; }
-            public int? __invalid_name__755811 { get; set; }
-            public int? __invalid_name__756089 { get; set; }
-            public int? __invalid_name__757228 { get; set; }
-            public int? __invalid_name__757633 { get; set; }
-            public int? __invalid_name__757634 { get; set; }
-            public int? __invalid_name__757760 { get; set; }
-            public int? __invalid_name__757785 { get; set; }
-            public int? __invalid_name__757833 { get; set; }
-            public int? __invalid_name__757959 { get; set; }
-            public int? __invalid_name__758384 { get; set; }
-            public int? __invalid_name__758444 { get; set; }
-            public int? __invalid_name__758451 { get; set; }
-            public int? __invalid_name__758456 { get; set; }
-            public int? __invalid_name__758470 { get; set; }
-            public int? __invalid_name__758496 { get; set; }
-            public int? __invalid_name__758525 { get; set; }
-            public int? __invalid_name__758540 { get; set; }
-            public int? __invalid_name__758721 { get; set; }
-            public int? __invalid_name__758722 { get; set; }
-            public int? __invalid_name__758772 { get; set; }
-            public int? __invalid_name__758920 { get; set; }
-            public int? __invalid_name__758979 { get; set; }
-            public int? __invalid_name__759086 { get; set; }
-            public int? __invalid_name__759156 { get; set; }
-            public int? __invalid_name__759319 { get; set; }
-            public int? __invalid_name__759588 { get; set; }
+            public int __invalid_name__759185 { get; set; }
+            public int? __invalid_name__759628 { get; set; }
+            public int? __invalid_name__759633 { get; set; }
+            public int? __invalid_name__759636 { get; set; }
+            public int? __invalid_name__759639 { get; set; }
+            public int? __invalid_name__759640 { get; set; }
+            public int? __invalid_name__759646 { get; set; }
+            public int? __invalid_name__759652 { get; set; }
+            public int? __invalid_name__759653 { get; set; }
+            public int? __invalid_name__759654 { get; set; }
+            public int? __invalid_name__759657 { get; set; }
+            public int? __invalid_name__759660 { get; set; }
+            public int? __invalid_name__759704 { get; set; }
+            public int? __invalid_name__759707 { get; set; }
+            public int? __invalid_name__759713 { get; set; }
+            public int? __invalid_name__759717 { get; set; }
+            public int? __invalid_name__759718 { get; set; }
+            public int? __invalid_name__759727 { get; set; }
+            public int? __invalid_name__759733 { get; set; }
+            public int? __invalid_name__759737 { get; set; }
+            public int? __invalid_name__759740 { get; set; }
+            public int? __invalid_name__759744 { get; set; }
+            public int? __invalid_name__759749 { get; set; }
+            public int? __invalid_name__759752 { get; set; }
+            public int? __invalid_name__759754 { get; set; }
+            public int? __invalid_name__759756 { get; set; }
+            public int? __invalid_name__759758 { get; set; }
+            public int? __invalid_name__759762 { get; set; }
+            public int? __invalid_name__759765 { get; set; }
+            public int? __invalid_name__759768 { get; set; }
+            public int? __invalid_name__759770 { get; set; }
+            public int? __invalid_name__759772 { get; set; }
+            public int? __invalid_name__759778 { get; set; }
+            public int? __invalid_name__759781 { get; set; }
+            public int? __invalid_name__759786 { get; set; }
+            public int? __invalid_name__759788 { get; set; }
+            public int? __invalid_name__759791 { get; set; }
+            public int? __invalid_name__759797 { get; set; }
+            public int? __invalid_name__759812 { get; set; }
+            public int? __invalid_name__759815 { get; set; }
+            public int? __invalid_name__759816 { get; set; }
+            public int? __invalid_name__759825 { get; set; }
+            public int? __invalid_name__759826 { get; set; }
+            public int? __invalid_name__759828 { get; set; }
+            public int? __invalid_name__759829 { get; set; }
+            public int? __invalid_name__759830 { get; set; }
+            public int? __invalid_name__759831 { get; set; }
+            public int? __invalid_name__759833 { get; set; }
+            public int? __invalid_name__759835 { get; set; }
+            public int? __invalid_name__759836 { get; set; }
+            public int? __invalid_name__759843 { get; set; }
+            public int? __invalid_name__759852 { get; set; }
+            public int? __invalid_name__759853 { get; set; }
+            public int? __invalid_name__759810 { get; set; }
         }
 
         public class Prefixes
         {
-            public string __invalid_name__730320 { get; set; }
-            public string __invalid_name__735186 { get; set; }
-            public string __invalid_name__738378 { get; set; }
-            public object __invalid_name__751169 { get; set; }
-            public object __invalid_name__752689 { get; set; }
-            public object __invalid_name__753770 { get; set; }
-            public string __invalid_name__753806 { get; set; }
-            public object __invalid_name__754760 { get; set; }
-            public string __invalid_name__755536 { get; set; }
-            public string __invalid_name__755678 { get; set; }
-            public string __invalid_name__755811 { get; set; }
-            public object __invalid_name__756089 { get; set; }
-            public object __invalid_name__757228 { get; set; }
-            public string __invalid_name__757633 { get; set; }
-            public object __invalid_name__757634 { get; set; }
-            public object __invalid_name__757760 { get; set; }
-            public string __invalid_name__757785 { get; set; }
-            public object __invalid_name__757833 { get; set; }
-            public object __invalid_name__757959 { get; set; }
-            public object __invalid_name__758384 { get; set; }
-            public object __invalid_name__758444 { get; set; }
-            public object __invalid_name__758451 { get; set; }
-            public object __invalid_name__758456 { get; set; }
-            public object __invalid_name__758470 { get; set; }
-            public object __invalid_name__758496 { get; set; }
-            public object __invalid_name__758525 { get; set; }
-            public string __invalid_name__758540 { get; set; }
-            public string __invalid_name__758721 { get; set; }
-            public object __invalid_name__758722 { get; set; }
-            public object __invalid_name__758772 { get; set; }
-            public object __invalid_name__758920 { get; set; }
-            public object __invalid_name__758979 { get; set; }
-            public object __invalid_name__759086 { get; set; }
-            public object __invalid_name__759156 { get; set; }
-            public object __invalid_name__759319 { get; set; }
-            public object __invalid_name__759588 { get; set; }
+            public string __invalid_name__759185 { get; set; }
+            public object __invalid_name__759628 { get; set; }
+            public string __invalid_name__759633 { get; set; }
+            public object __invalid_name__759636 { get; set; }
+            public object __invalid_name__759639 { get; set; }
+            public string __invalid_name__759640 { get; set; }
+            public object __invalid_name__759646 { get; set; }
+            public object __invalid_name__759652 { get; set; }
+            public object __invalid_name__759653 { get; set; }
+            public object __invalid_name__759654 { get; set; }
+            public object __invalid_name__759657 { get; set; }
+            public object __invalid_name__759660 { get; set; }
+            public object __invalid_name__759704 { get; set; }
+            public object __invalid_name__759707 { get; set; }
+            public object __invalid_name__759713 { get; set; }
+            public object __invalid_name__759717 { get; set; }
+            public string __invalid_name__759718 { get; set; }
+            public object __invalid_name__759727 { get; set; }
+            public object __invalid_name__759733 { get; set; }
+            public object __invalid_name__759737 { get; set; }
+            public object __invalid_name__759740 { get; set; }
+            public object __invalid_name__759744 { get; set; }
+            public string __invalid_name__759749 { get; set; }
+            public object __invalid_name__759752 { get; set; }
+            public object __invalid_name__759754 { get; set; }
+            public string __invalid_name__759756 { get; set; }
+            public object __invalid_name__759758 { get; set; }
+            public object __invalid_name__759762 { get; set; }
+            public object __invalid_name__759765 { get; set; }
+            public object __invalid_name__759768 { get; set; }
+            public object __invalid_name__759770 { get; set; }
+            public string __invalid_name__759772 { get; set; }
+            public object __invalid_name__759778 { get; set; }
+            public object __invalid_name__759781 { get; set; }
+            public object __invalid_name__759786 { get; set; }
+            public object __invalid_name__759788 { get; set; }
+            public object __invalid_name__759791 { get; set; }
+            public string __invalid_name__759797 { get; set; }
+            public object __invalid_name__759812 { get; set; }
+            public object __invalid_name__759815 { get; set; }
+            public object __invalid_name__759816 { get; set; }
+            public object __invalid_name__759825 { get; set; }
+            public string __invalid_name__759826 { get; set; }
+            public object __invalid_name__759828 { get; set; }
+            public object __invalid_name__759829 { get; set; }
+            public object __invalid_name__759830 { get; set; }
+            public object __invalid_name__759831 { get; set; }
+            public object __invalid_name__759833 { get; set; }
+            public object __invalid_name__759835 { get; set; }
+            public object __invalid_name__759836 { get; set; }
+            public int? __invalid_name__759843 { get; set; }
+            public string __invalid_name__759852 { get; set; }
+            public string __invalid_name__759853 { get; set; }
+            public string __invalid_name__759810 { get; set; }
         }
 
         public class Entrant
@@ -252,7 +294,7 @@ public class smashgg
             public object participant1Id { get; set; }
             public object participant2Id { get; set; }
             public string name { get; set; }
-            public object finalPlacement { get; set; }
+            public int? finalPlacement { get; set; }
             public int defaultSkill { get; set; }
             public object skill { get; set; }
             public int skillOrder { get; set; }
@@ -303,7 +345,7 @@ public class smashgg
             public string locationName { get; set; }
             public int? locationRadius { get; set; }
             public string radiusUnit { get; set; }
-            public int? locationId { get; set; }
+            public int locationId { get; set; }
             public string name { get; set; }
             public string slug { get; set; }
             public string description { get; set; }
@@ -322,7 +364,7 @@ public class smashgg
             public string title { get; set; }
             public string slug { get; set; }
             public bool published { get; set; }
-            public int? status { get; set; }
+            public int status { get; set; }
             public bool active { get; set; }
             public string description { get; set; }
             public int publishedAt { get; set; }
@@ -331,7 +373,7 @@ public class smashgg
             public int createdAt { get; set; }
             public int updatedAt { get; set; }
             public int? submittedAt { get; set; }
-            public int? createdBy { get; set; }
+            public int createdBy { get; set; }
             public List<object> images { get; set; }
             public string permissionType { get; set; }
         }

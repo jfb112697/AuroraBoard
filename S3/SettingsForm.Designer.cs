@@ -106,7 +106,7 @@
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(12, 149);
+            this.OkButton.Location = new System.Drawing.Point(12, 139);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 2;
@@ -116,7 +116,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(88, 149);
+            this.CancelButton.Location = new System.Drawing.Point(88, 139);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 3;
@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 182);
+            this.ClientSize = new System.Drawing.Size(278, 176);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.smashgg);
             this.Controls.Add(this.CancelButton);
@@ -156,6 +156,7 @@
             this.Name = "SettingsForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "SettingsForm";
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerPortbox)).EndInit();
