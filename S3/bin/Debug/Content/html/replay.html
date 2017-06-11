@@ -10,16 +10,21 @@
 	</style>
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script>
-			  function updateInformation()
+	function updateInformation()
 	{
 	$.get('http://127.0.0.1:8081/getCurrentValues', function (json) {
 		//ticker data
 		var clip = json.twitchclip;
+		if(clip != $('#replay').attr('src')) {
+			$('#replay').attr('src', clip);
+			reload();
+		}
 		$('#replay').attr('src', clip);
 	}, 'json');
 }
 		$( window ).load(function() {
 			updateInformation();
+          $('#replay').contents().find('video').removeAttr(controls); 
 		});
 	</script>
 </head>

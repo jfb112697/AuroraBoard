@@ -191,11 +191,12 @@ text-align: center;
 }
 #player1Score{
 	 position:absolute;
-	 left:12%;
+	 left:13%;
 }
 #player2Score{
-	 position:relative;
-	 left:50px;
+	position: absolute;
+	right: -46px;
+	top: 0;
 }
 .characterImgP2{
 	left:100px;

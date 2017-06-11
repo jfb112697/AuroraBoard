@@ -16,6 +16,8 @@ using System.Net;
 using static S3.smashgg;
 using OBSWebsocketDotNet;
 using System.Threading;
+using HtmlAgilityPack;
+using System.Text.RegularExpressions;
 
 namespace S3
 {
@@ -23,20 +25,20 @@ namespace S3
     {
         protected OBSWebsocket _obs;
         private NancyHost hostg;
+        
+        
         public MainForm()
         {
             InitializeComponent();
-
             _obs = new OBSWebsocket();
             Globals.CurrentInformationUpdate = new InformationUpdate();
             Globals.CurrentInformationUpdate.Player1 = new Player();
             Globals.CurrentInformationUpdate.Player2 = new Player();
             Globals.CurrentInformationUpdate.Player1.name = "EIREXE";
             Globals.CurrentInformationUpdate.Player2.name = "BoastingToast";
-            Globals.CurrentInformationUpdate.isEmpty = true;
             parseComboBoxItems();
             _obs.OnRecordingStateChange += onRecordingStateChange;
-
+            btnToggleRecording.Hide();
         }
 
         private void onRecordingStateChange(OBSWebsocket sender, OutputState newState)
@@ -106,11 +108,15 @@ namespace S3
         }
         private void SendUpdate()
         {
-            if (Globals.CurrentInformationUpdate.isEmpty == true && btnToggleRecording.Text == "Stop recording")
+            if (isEmpty == true && obs == true && getRecordingStatus() == false)
             {
                _obs.ToggleRecording();
             }
-            Globals.CurrentInformationUpdate.twitchclip = "https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed";
+            if(twitchClip.Text != "")
+            { 
+                Globals.CurrentInformationUpdate.twitchclip = "https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed";
+                getReplay("https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed");
+            }
 
             updateName(Player1Name.Text);
             updateName(Player2Name.Text);
@@ -121,8 +127,6 @@ namespace S3
 
             Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
             Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
-            Globals.CurrentInformationUpdate.Player1.sponsor = (Sponsor)((ComboboxItem)Player1Sponsor.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player2.sponsor = (Sponsor)((ComboboxItem)Player2Sponsor.SelectedItem).Value;
             Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
             Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
             Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
@@ -133,10 +137,7 @@ namespace S3
             Globals.CurrentInformationUpdate.streamer = StreamerTextbox.Text;
             Globals.CurrentInformationUpdate.Player1.flag = ((Flag) ((ComboboxItem) FlagsCombo.SelectedItem).Value);
             Globals.CurrentInformationUpdate.Player2.flag = ((Flag)((ComboboxItem)FlagsComboP2.SelectedItem).Value);
-            if (Player1Name.Text != null || Player2Name.Text != null)
-            {
-                Globals.CurrentInformationUpdate.isEmpty = false;
-            }
+            isEmpty = false;
         }
         private void switchPorts()
         {
@@ -165,6 +166,40 @@ namespace S3
             Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
             Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
         }
+        public void getReplay(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+           try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
+
+                    if (response.CharacterSet == null)
+                    {
+                        readStream = new StreamReader(receiveStream);
+                    }
+                    else
+                    {
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    }
+
+                    string data = readStream.ReadToEnd();
+
+                    response.Close();
+                    readStream.Close();
+                    string pattern = "https:@/@/clips-media-assets.twitch.tv/*-offset-33686@.mp4";
+                    var match = Regex.Match(data, pattern);
+                    MessageBox.Show("Match: " + match.Groups[1].Value);
+                    }
+                }
+            catch(Exception e)
+            {
+                MessageBox.Show("Invalid URL");
+            }
+        }
         private void parseComboBoxItems()
         {
             string file = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "characters.json");
@@ -182,25 +217,8 @@ namespace S3
             }
             Player1Character.SelectedIndex = 0;
             Player2Character.SelectedIndex = 0;
-
-
-            string sponsors = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "sponsors.json");
-            string sponsorsContents = File.ReadAllText(sponsors);
-            SponsorList sponsorslist = JsonConvert.DeserializeObject<SponsorList>(sponsorsContents);
-
-            foreach (Sponsor s in sponsorslist.sponsors)
-            {
-                ComboboxItem item = new ComboboxItem();
-                item.Text = s.name;
-                item.Value = s;
-                Player1Sponsor.Items.Add(item);
-                Player2Sponsor.Items.Add(item);
-
-            }
             Player1Character.SelectedIndex = 0;
             Player2Character.SelectedIndex = 0;
-            Player1Sponsor.SelectedIndex = 0;
-            Player2Sponsor.SelectedIndex = 0;
             string flags = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "flags.json");
             string flagsContents = File.ReadAllText(flags);
             FlagList flagsList = JsonConvert.DeserializeObject<FlagList>(flagsContents);
@@ -222,7 +240,20 @@ namespace S3
             form.ShowDialog();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        public bool getRecordingStatus()
+        {
+            var streamStatus = _obs.GetStreamingStatus();
+            if (streamStatus.IsRecording)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+            private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Scoreboard Settings Data(.auboard)|*.auboard|All Files(*.*) | *.*";
@@ -303,6 +334,10 @@ namespace S3
             }
         }
         private bool isServerUp = false;
+        private bool isEmpty = false;
+        private bool obs;
+        private bool started = false;
+
         private void StartServer_Click(object sender, EventArgs e)
         {            
             if (isServerUp)
@@ -356,16 +391,16 @@ namespace S3
         }
         private void reset()
         {
-            var delay = Task.Delay(1000).ContinueWith(_ =>
-            {            
-            var directory = new DirectoryInfo("recordings");
-            string myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First().Name;
-            string newname = Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.round + ".mp4";
-            System.IO.File.Move("recordings/" + myFile, "recordings/" + newname);
-            MessageBox.Show(myFile + Environment.NewLine + newname);
-                string description = "Super Smash Bros. Melee tournament " + Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name;
-                string videoName = Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.tournamentName;
-            });
+                var delay = Task.Delay(1500).ContinueWith(_ =>
+                {
+                    var directory = new DirectoryInfo("recordings");
+                    string myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First().Name;
+                    string newname = Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.round + ".mp4";
+                    System.IO.File.Move("recordings/" + myFile, "recordings/" + newname);
+                    MessageBox.Show(myFile + Environment.NewLine + newname);
+                    string description = "Super Smash Bros. Melee tournament " + Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name;
+                    string videoName = Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.tournamentName;
+                });
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -374,13 +409,14 @@ namespace S3
             Player1Name.Text = "";
             Player2Name.Text = "";
             RoundNameTextbox.Text = "";
-            if (btnToggleRecording.Text == "Stop recording")
+            if (obs == true && getRecordingStatus() == true)
             {
                 _obs.ToggleRecording();
+                Thread resetThread = new Thread(reset);
+                resetThread.Start();
             }
-            Globals.CurrentInformationUpdate.isEmpty = true;
-            Thread resetThread = new Thread(reset);
-            resetThread.Start();
+            isEmpty = true;
+            
         }
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
@@ -411,6 +447,7 @@ namespace S3
             try
             {
                 _obs.Connect("ws://127.0.0.1:4444", "password");
+                obs = true;
             }
             catch (AuthFailureException)
             {
@@ -422,14 +459,29 @@ namespace S3
                 MessageBox.Show("Connect failed : " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            MainWindow obswindow = new MainWindow();
-            obswindow.ShowDialog();
+            var streamStatus = _obs.GetStreamingStatus();
+            if (streamStatus.IsRecording)
+            {
+                onRecordingStateChange(_obs, OutputState.Started);
+            }
+            else
+            {
+                onRecordingStateChange(_obs, OutputState.Stopped);
+            }
         }
         private void btnToggleRecording_Click(object sender, EventArgs e)
         {
-            _obs.ToggleRecording();
-            btnToggleRecording.Text = "Stop recording";
-            btnToggleRecording.Hide();
+            try
+            {
+                _obs.ToggleRecording();
+                started = true;
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Couldn't toggle recording");
+            }
+            //btnToggleRecording.Text = "Stop recording";
+            //btnToggleRecording.Hide();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
