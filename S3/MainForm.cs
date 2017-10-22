@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +10,11 @@ using System.IO;
 using ImageMagick;
 using Nancy.Hosting.Self;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net;
-using static S3.smashgg;
 using OBSWebsocketDotNet;
 using System.Threading;
-using HtmlAgilityPack;
 using System.Text.RegularExpressions;
-
 namespace S3
 {
     public partial class MainForm : Form
@@ -36,7 +32,6 @@ namespace S3
             Globals.CurrentInformationUpdate.Player2 = new Player();
             Globals.CurrentInformationUpdate.Player1.name = "EIREXE";
             Globals.CurrentInformationUpdate.Player2.name = "BoastingToast";
-            parseComboBoxItems();
             _obs.OnRecordingStateChange += onRecordingStateChange;
             btnToggleRecording.Hide();
         }
@@ -89,20 +84,20 @@ namespace S3
             using (StreamReader sr = File.OpenText("names.txt"))
             {
                 string[] lines = File.ReadAllLines("names.txt");
-                bool isMatch = false;
                 for (int x = 0; x < lines.Length - 1; x++)
                 {
                     if (Player1Name.Text == lines[x] || Player2Name.Text == lines[x])
                     {
                         sr.Close();
-                        isMatch = true;
+                        return;
                     }
                 }
-                if (!isMatch && Player1Name.Text != "" && Player2Name.Text != "")
+                sr.Close();
+                if (Player1Name.Text != "" && Player2Name.Text != "")
                 {
-                    sr.Close();
                     File.AppendAllText("names.txt", Player1Name.Text + Environment.NewLine);
                     File.AppendAllText("names.txt", Player2Name.Text + Environment.NewLine);
+                    sr.Close();
                 }
             }
         }
@@ -112,10 +107,26 @@ namespace S3
             {
                _obs.ToggleRecording();
             }
-            if(twitchClip.Text != "")
-            { 
-                Globals.CurrentInformationUpdate.twitchclip = "https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed";
-                getReplay("https://clips.twitch.tv/embed?clip=" + twitchClip.Text + "&tt_medium=clips_api&tt_content=embed");
+            string p1name = Player1Name.Text;
+            string p2name = Player2Name.Text;
+            if(P1Sponsor.Text != "")
+            {
+                p1name = P1Sponsor.Text + " | " + Player1Name.Text;
+                MessageBox.Show(p1name);
+                try
+                {
+                    sponsors.Add(Player1Name.Text, P1Sponsor.Text);
+                }
+                catch (System.ArgumentException) { }
+            }
+            if (P2Sponsor.Text != "")
+            {
+                p2name = P2Sponsor.Text + " | " + Player2Name.Text;
+                try
+                {
+                    sponsors.Add(Player2Name.Text, P2Sponsor.Text);
+                }
+                catch (System.ArgumentException) { }
             }
 
             updateName(Player1Name.Text);
@@ -125,18 +136,22 @@ namespace S3
             Player1Name.AutoCompleteCustomSource.AddRange(names);
             Player2Name.AutoCompleteCustomSource.AddRange(names);
 
-            Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
-            Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
-            Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
+            Globals.CurrentInformationUpdate.Player1.name = p1name;
+            Globals.CurrentInformationUpdate.Player2.name = p2name;
             Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
             Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
+            Globals.CurrentInformationUpdate.Player1.character = P1Char.Text;
+            Globals.CurrentInformationUpdate.Player2.character = P2Char.Text;
+            Globals.CurrentInformationUpdate.Player1.sponsor = P1Sponsor.Text;
+            Globals.CurrentInformationUpdate.Player2.sponsor = P2Sponsor.Text;
             Globals.CurrentInformationUpdate.tournamentName = tournamentNameTextbox.Text;
             Globals.CurrentInformationUpdate.round = RoundNameTextbox.Text;
-            Globals.CurrentInformationUpdate.caster = CasterTextbox.Text;
-            Globals.CurrentInformationUpdate.streamer = StreamerTextbox.Text;
-            Globals.CurrentInformationUpdate.Player1.flag = ((Flag) ((ComboboxItem) FlagsCombo.SelectedItem).Value);
-            Globals.CurrentInformationUpdate.Player2.flag = ((Flag)((ComboboxItem)FlagsComboP2.SelectedItem).Value);
+            Globals.CurrentInformationUpdate.caster = Comm2Text.Text;
+            Globals.CurrentInformationUpdate.streamer = Comm1Text.Text;
+            Globals.CurrentInformationUpdate.Comm1Name = Comm1Text.Text;
+            Globals.CurrentInformationUpdate.Comm1Twitter = Comm1Twitter.Text;
+            Globals.CurrentInformationUpdate.Comm2Name = Comm2Text.Text;
+            Globals.CurrentInformationUpdate.Comm2Twitter = Comm2Twitter.Text;
             isEmpty = false;
         }
         private void switchPorts()
@@ -146,11 +161,6 @@ namespace S3
             Player1Name.Text = p2name;
             Player2Name.Text = p1name;
 
-            string p1char = Player1Character.Text;
-            string p2char = Player2Character.Text;
-            Player1Character.Text = p2char;
-            Player2Character.Text = p1char;
-
             int p1score = Decimal.ToInt32(Player1Score.Value);
             int p2score = Decimal.ToInt32(Player2Score.Value);
             Player1Score.Value = p2score;
@@ -159,9 +169,7 @@ namespace S3
 
             Globals.CurrentInformationUpdate.Player1.name = Player1Name.Text;
             Globals.CurrentInformationUpdate.Player2.name = Player2Name.Text;
-
-            Globals.CurrentInformationUpdate.Player1.character = (Character)((ComboboxItem)Player1Character.SelectedItem).Value;
-            Globals.CurrentInformationUpdate.Player2.character = (Character)((ComboboxItem)Player2Character.SelectedItem).Value;
+            
 
             Globals.CurrentInformationUpdate.Player1.score = Decimal.ToInt32(Player1Score.Value);
             Globals.CurrentInformationUpdate.Player2.score = Decimal.ToInt32(Player2Score.Value);
@@ -169,70 +177,36 @@ namespace S3
         public void getReplay(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-           try
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = null;
+
+                if (response.CharacterSet == null)
                 {
-                    Stream receiveStream = response.GetResponseStream();
-                    StreamReader readStream = null;
-
-                    if (response.CharacterSet == null)
-                    {
-                        readStream = new StreamReader(receiveStream);
-                    }
-                    else
-                    {
-                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                    }
-
-                    string data = readStream.ReadToEnd();
-
-                    response.Close();
-                    readStream.Close();
-                    string pattern = "https:@/@/clips-media-assets.twitch.tv/*-offset-33686@.mp4";
-                    var match = Regex.Match(data, pattern);
-                    MessageBox.Show("Match: " + match.Groups[1].Value);
-                    }
+                    readStream = new StreamReader(receiveStream);
                 }
-            catch(Exception e)
-            {
-                MessageBox.Show("Invalid URL");
+                else
+                {
+                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                }
+
+                string data = readStream.ReadToEnd();
+
+                response.Close();
+                readStream.Close();
+                string pattern = "https://clips-media-assets.twitch.tv/.*?.mp4";
+                var match = Regex.Match(data, pattern);
+                string videourl = match.Value;
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(videourl, "replays/replay.mp4");
+                }
             }
+
         }
-        private void parseComboBoxItems()
-        {
-            string file = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "characters.json");
-            string contents = File.ReadAllText(file);
-            CharacterList list = JsonConvert.DeserializeObject<CharacterList>(contents);
-            
-            foreach(Character c in list.characters)
-            {
-                ComboboxItem item = new ComboboxItem();
-                item.Text = c.name;
-                item.Value = c;
-                Player1Character.Items.Add(item);
-                Player2Character.Items.Add(item);
-                
-            }
-            Player1Character.SelectedIndex = 0;
-            Player2Character.SelectedIndex = 0;
-            Player1Character.SelectedIndex = 0;
-            Player2Character.SelectedIndex = 0;
-            string flags = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "flags.json");
-            string flagsContents = File.ReadAllText(flags);
-            FlagList flagsList = JsonConvert.DeserializeObject<FlagList>(flagsContents);
-            foreach (Flag flag in flagsList.flags)
-            {
-                ComboboxItem item = new ComboboxItem();
-                item.Text = flag.name;
-                item.Value = flag;
-                FlagsCombo.Items.Add(item);
-                FlagsComboP2.Items.Add(item);
-            }
-            FlagsCombo.SelectedIndex = 0;
-            FlagsComboP2.SelectedIndex = 0;
-        }
+        
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
@@ -284,21 +258,17 @@ namespace S3
         {
             Player1Name.Text = Globals.settings.streamData.Player1.name;
             Player2Name.Text = Globals.settings.streamData.Player2.name;
-            Player1Sponsor.Text = Globals.settings.streamData.Player1.sponsor.name;
-            Player2Sponsor.Text = Globals.settings.streamData.Player2.sponsor.name;
-            Player1Character.Text = Globals.settings.streamData.Player1.character.name;
-            Player2Character.Text = Globals.settings.streamData.Player2.character.name;
             Player1Score.Text = Globals.settings.streamData.Player1.score.ToString();
             Player2Score.Text = Globals.settings.streamData.Player2.score.ToString();
             FlagsCombo.Text = Globals.settings.streamData.Player1.flag.name;
             FlagsComboP2.Text = Globals.settings.streamData.Player2.flag.name;
             RoundNameTextbox.Text = Globals.settings.streamData.round;
             tournamentNameTextbox.Text = Globals.settings.streamData.tournamentName;
-            StreamerTextbox.Text = Globals.settings.streamData.streamer;
-            CasterTextbox.Text = Globals.settings.streamData.caster;
             SendUpdate();
         }
         public static Dictionary<int?, string> entranthash = new Dictionary<int?, string>();
+        public static Dictionary<string, string> sponsors = new Dictionary<string, string>();
+
         private void getParticipants()
         {
             string smashgg = Globals.settings.smashgg;
@@ -308,29 +278,26 @@ namespace S3
             }
             else
             {
-                string url = "https://api.smash.gg/tournament/" + smashgg + "?expand[0]=entrants";
+                string url = "https://api.smash.gg/tournament/" + smashgg + "/event/melee-singles?expand[0]=entrants";
                 var json = new WebClient().DownloadString(url);
-                RootObject data = JsonConvert.DeserializeObject<RootObject>(json);
-                var players = data.entities.player;
-                foreach (var player in players) {
-                    string tag = (player.gamerTag);
-                    string entrantid = (player.entrantId);
-                    int? entrantkey = Int32.Parse(entrantid);
-                    File.AppendAllText("names.txt", tag + Environment.NewLine);
-                    try
+                dynamic d = JObject.Parse(json);
+                var entrants = d.entities.entrants;
+                foreach(var entrant in entrants)
+                {
+                    int? key = (int?) entrant.id;
+                    string name = entrant.name;
+                    if (name.Contains("|"))
                     {
-                        entranthash.Add(entrantkey, tag);
+                        string[] sponsorlist = name.Split('|');
+                        string sponsor = sponsorlist[0];
+                        sponsor = sponsor.Replace(" ", "");
+                        name = sponsorlist[1];
+                        name = name.Remove(0, 1);
+                        sponsors.Add(name, sponsor);
                     }
-                    catch (Exception e)
-                    {
-                        entrantkey = entrantkey + 1000;
-                        entranthash.Add(entrantkey, tag);
-
-                    }
-                        File.AppendAllText("ticker.txt", entrantkey + Environment.NewLine);
+                    entranthash.Add(key, name);
+                    File.AppendAllText("names.txt", name + Environment.NewLine);
                 }
-
-
             }
         }
         private bool isServerUp = false;
@@ -348,7 +315,6 @@ namespace S3
             }
             else
             {
-                getParticipants();
                 if (Globals.settings.tintEnabled)
                 {
                     foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Content/html/img")))
@@ -377,6 +343,7 @@ namespace S3
                     Console.WriteLine(ee.Message);
                     throw;
                 }
+
             }
         }
 
@@ -393,18 +360,30 @@ namespace S3
         {
                 var delay = Task.Delay(1500).ContinueWith(_ =>
                 {
+                    string player1 = Globals.CurrentInformationUpdate.Player1.name;
+                    string player2 = Globals.CurrentInformationUpdate.Player2.name;
+                    if (Player1Name.Text.Contains("|"))
+                    {
+                        player1 = player1.Replace("|", " ");
+                    }
+                    if (Player2Name.Text.Contains("|"))
+                    {
+                        player2 = player2.Replace("|", " ");
+                    }
                     var directory = new DirectoryInfo("recordings");
                     string myFile = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First().Name;
-                    string newname = Globals.CurrentInformationUpdate.tournamentName + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.round + ".mp4";
+                    string newname = Globals.CurrentInformationUpdate.tournamentName + " " +player1 + " vs. " + player2 + " " + Globals.CurrentInformationUpdate.round + ".mp4";
                     System.IO.File.Move("recordings/" + myFile, "recordings/" + newname);
                     MessageBox.Show(myFile + Environment.NewLine + newname);
                     string description = "Super Smash Bros. Melee tournament " + Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name;
-                    string videoName = Globals.CurrentInformationUpdate.round + " " + Globals.CurrentInformationUpdate.Player1.name + " vs. " + Globals.CurrentInformationUpdate.Player2.name + " " + Globals.CurrentInformationUpdate.tournamentName;
+                    string videoName = Globals.CurrentInformationUpdate.round + " " + player1 + " vs. " + player2 + " " + Globals.CurrentInformationUpdate.tournamentName;
                 });
         }
         private void button1_Click(object sender, EventArgs e)
         {
             Player1Score.Value = 0;
+            P1Sponsor.Text = "";
+            P2Sponsor.Text = "";
             Player2Score.Value = 0;
             Player1Name.Text = "";
             Player2Name.Text = "";
@@ -421,7 +400,23 @@ namespace S3
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
         {
+            try
+            {
+                P1Sponsor.Text = sponsors[Player1Name.Text];
+            }
+            catch (Exception)
+            {
 
+            }
+        }
+
+        private void Player1Name_Enter(object sender, EventArgs e)
+        {
+            Player2Name.SelectAll();
+        }
+        private void Player2Name_Enter(object sender, EventArgs e)
+        {
+            RoundNameTextbox.SelectAll();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -486,25 +481,153 @@ namespace S3
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            getCharNames();
+            getSponsorNames();
+        }
+        private void getCharNames()
+        {
+            File.WriteAllText("characters.txt", String.Empty);
+            try
+            {
+                var files = Directory.EnumerateFiles("content\\character");
 
+                foreach (string currentFile in files)
+                {
+                    char[] delimiterChars = { '\\', '.' };
+                    string[] words = currentFile.Split(delimiterChars);
+                    string fileName = words[2];
+                    File.AppendAllText("characters.txt", fileName + Environment.NewLine);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            string[] chars = File.ReadAllLines("characters.txt");
+
+            P1Char.AutoCompleteCustomSource.AddRange(chars);
+            P2Char.AutoCompleteCustomSource.AddRange(chars);
+            return;
+        }
+        private void getSponsorNames()
+        {
+            File.WriteAllText("sponsors.txt", String.Empty);
+            try
+            {
+                var files = Directory.EnumerateFiles("content\\sponsors");
+
+                foreach (string currentFile in files)
+                {
+                    char[] delimiterChars = { '\\', '.' };
+                    string[] words = currentFile.Split(delimiterChars);
+                    string fileName = words[2];
+                    File.AppendAllText("characters.txt", fileName + Environment.NewLine);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            string[] chars = File.ReadAllLines("characters.txt");
+
+            P1Sponsor.AutoCompleteCustomSource.AddRange(chars);
+            P2Sponsor.AutoCompleteCustomSource.AddRange(chars);
+            return;
         }
 
         private void showSets_Click(object sender, EventArgs e)
         {
-            if (Globals.settings.smashgg != null)
+            List<Ticker.Set> matches = Ticker.Ticker.getSets(Globals.settings.smashgg);
+            Random rng = new Random();
+            Globals.CurrentInformationUpdate.ticker1 = matches[matches.Count - 1].toString();
+            Globals.CurrentInformationUpdate.ticker2 = matches[matches.Count - 2].toString();
+            Globals.CurrentInformationUpdate.ticker3 = matches[matches.Count - 3].toString();
+            Globals.CurrentInformationUpdate.ticker4 = matches[matches.Count - 4].toString();
+            Globals.CurrentInformationUpdate.ticker5 = matches[matches.Count - 5].toString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (twitchClip.Text != "")
             {
-                Ticker.Ticker.GetSets();
-                int length = Ticker.Ticker.matches.Count();
-                Globals.CurrentInformationUpdate.ticker1 = Ticker.Ticker.matches[length - 1];
-                Globals.CurrentInformationUpdate.ticker2 = Ticker.Ticker.matches[length - 2];
-                Globals.CurrentInformationUpdate.ticker3 = Ticker.Ticker.matches[length - 3];
-                Globals.CurrentInformationUpdate.ticker4 = Ticker.Ticker.matches[length - 4];
-                //Globals.CurrentInformationUpdate.ticker5 = Ticker.Ticker.matches[length - 5];
+                string url = "https://clips.twitch.tv/embed?clip=" + twitchClip.Text;
+                getReplay(url);
             }
-            else
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Comm1Twitter_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            getParticipants();
+        }
+
+        private void P1Char_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            CrewBattle cbform = new CrewBattle();
+            cbform.ShowDialog();
+        }
+
+        private void P1Sponsor_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Player2Name_TextChanged(object sender, EventArgs e)
+        {
+            try
             {
-                return;
+                P2Sponsor.Text = sponsors[Player2Name.Text];
             }
+            catch (Exception)
+            {
+
+            }
+        }
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            updateSmashgg();
+        }
+        private void updateSmashgg()
+        {
+            if (smashggCheck.Checked)
+            {
+                Ticker.Set set = Ticker.Ticker.getStreamStatus(Globals.settings.smashgg);
+                string[] tags = set.getTags();
+                Player1Name.Text = tags[0];
+                Player2Name.Text = tags[1];
+                Player1Score.Value = (int)set.score1;
+                Player2Score.Value = (int)set.score2;
+                RoundNameTextbox.Text = set.round;
+
+                Globals.CurrentInformationUpdate.round = set.round;
+                Globals.CurrentInformationUpdate.Player1.name = tags[0];
+                Globals.CurrentInformationUpdate.Player2.name = tags[1];
+                Globals.CurrentInformationUpdate.Player1.score = (int)set.score1;
+                Globals.CurrentInformationUpdate.Player2.score = (int)set.score2;
+            }
+        }
+        private void smashggCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            TimerCallback tmCallback = updateSmashgg();
+            System.Threading.Timer timer = new System.Threading.Timer(tmCallback, "test", 1000, 1000);
+            Console.WriteLine("Press any key to exit the sample");
+            Console.ReadLine();
         }
     }
 }

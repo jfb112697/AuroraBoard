@@ -46,3 +46,5 @@ F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.csproj.GenerateResource.Cache
 F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.exe
 F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.pdb
 F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.csprojResolveAssemblyReference.cache
+F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.CrewBattle.resources
+F:\c#\clone2\AuroraBoard\S3\obj\Release\S3.SEForm.resources

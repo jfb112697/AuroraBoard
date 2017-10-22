@@ -60,16 +60,21 @@ namespace Ticker
             public bool @private { get; set; }
             public bool isOnline { get; set; }
             public bool hasTasks { get; set; }
-            public bool hasDecks { get; set; }
+            public object hasDecks { get; set; }
             public bool enableSlippi { get; set; }
             public bool hasMatchmaking { get; set; }
             public bool isPlaceholder { get; set; }
+            public bool checkInEnabled { get; set; }
+            public int checkInDuration { get; set; }
+            public int checkInBuffer { get; set; }
+            public object deadlineAction { get; set; }
             public int startAt { get; set; }
             public int endAt { get; set; }
             public object startedAt { get; set; }
             public object completedAt { get; set; }
             public object projectionMode { get; set; }
             public object rulesetId { get; set; }
+            public object requiresVerification { get; set; }
             public PageConfig pageConfig { get; set; }
             public List<object> gameModeConfig { get; set; }
             public List<object> rulesetSettings { get; set; }
@@ -80,6 +85,8 @@ namespace Ticker
             public List<object> images { get; set; }
             public int scheduleId { get; set; }
             public object platform { get; set; }
+            public object deckSubmissionDeadline { get; set; }
+            public object deckDeadlineHandled { get; set; }
             public List<string> expand { get; set; }
             public string typeDisplayStr { get; set; }
         }
@@ -88,7 +95,7 @@ namespace Ticker
         {
             public int id { get; set; }
             public int phaseId { get; set; }
-            public object waveId { get; set; }
+            public int? waveId { get; set; }
             public object poolRefId { get; set; }
             public int groupTypeId { get; set; }
             public object title { get; set; }
@@ -104,12 +111,14 @@ namespace Ticker
             public int? winnersTargetPhaseId { get; set; }
             public int numProgressing { get; set; }
             public object losersTargetPhaseId { get; set; }
-            public object startAt { get; set; }
+            public int? startAt { get; set; }
             public object startedAt { get; set; }
             public List<object> seeds { get; set; }
             public List<object> sets { get; set; }
             public List<object> rounds { get; set; }
             public object numRounds { get; set; }
+            public object firstRoundTime { get; set; }
+            public object canAutoAssign { get; set; }
             public object pointsPerMatchWin { get; set; }
             public object pointsPerGameWin { get; set; }
             public object pointsPerBye { get; set; }
@@ -118,6 +127,7 @@ namespace Ticker
             public List<object> expand { get; set; }
             public bool hasSets { get; set; }
             public bool hasCustomWinnerByes { get; set; }
+            public string percentageComplete { get; set; }
         }
 
         public class Entities

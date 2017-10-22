@@ -98,6 +98,18 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="ComboboxItem.cs" />
+    <Compile Include="CrewBattle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrewBattle.Designer.cs">
+      <DependentUpon>CrewBattle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SEForm.Designer.cs">
+      <DependentUpon>SEForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GroupsData.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -114,6 +126,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="Recorder.cs" />
+    <Compile Include="Set.cs" />
     <Compile Include="SetData.cs" />
     <Compile Include="smashgg.cs" />
     <Compile Include="Program.cs" />
@@ -127,8 +140,15 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sponsor.cs" />
+    <Compile Include="Thumbnail.cs" />
     <Compile Include="Ticker.cs" />
     <Compile Include="UploadVideo.cs" />
+    <EmbeddedResource Include="CrewBattle.resx">
+      <DependentUpon>CrewBattle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SEForm.resx">
+      <DependentUpon>SEForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,109 +1,104 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using static Ticker.GroupData;
-using System.Collections;
 using System.Windows.Forms;
-using System.IO;
 
 namespace Ticker
 {
     class Ticker
     {
-        public static List<string> matches = new List<string>();
-
-        public static Boolean IsValid(int? p1, int? p2, int? score1, int? score2)
+        private static bool match(string a, string b)
         {
-            if(p1 == null || p2 == null || score1 == null || score2 == null)
-            {
-                return false;
-            }
-            else
+            if(a == b)
             {
                 return true;
             }
-        }
-        public static int GetWinner(int? p1, int? p2, int? winner)
-        {
-            if (winner == p1)
-            {
-                return 1;
-            }
             else
             {
-                return 2;
+                return false;
             }
         }
-        public static void WriteMatch(int? p1, int? p2, int? win, int? score1, int? score2)
+       
+        public static Set getStreamStatus(string smashgg)
         {
-            int winner = GetWinner(p1, p2, win);
-            Boolean valid = IsValid(p1, p2, score1, score2);
-            if(valid == false)
-            {
-                return;
-            }
-            try
-            {
-                string p1tag = S3.MainForm.entranthash[p1];
-                string p2tag = S3.MainForm.entranthash[p2];
-                if (winner == 1)
-                {
+            int streamId = S3.Globals.settings.streamId;
+            List<Set> Sets = new List<Set>();
+            string url = "https://api.smash.gg/tournament/" + smashgg + "/event/melee-singles?expand[0]=groups";
+            var json = new WebClient().DownloadString(url);
+            dynamic RootObject = JObject.Parse(json);
 
-                    matches.Add("<div class=\"left\"><b><div class=\"score1\">" + score1 + "</div> <div class=\"tag1\">" + p1tag + "</div></b></div> <div class=\"right\"><div class=\"tag2\"><p>" + p2tag + "</p></div> <div class=\"score2\"><p>" + score2 + "</p></div></div>");
-                }
-                else
-                {
-                    matches.Add("<div class=\"left\"><div class=\"score1\">" + score2 + "</div> <div class=\"tag1\">" + p2tag + "</div></b></div> <div class=\"right\"><div class=\"tag2\"><p>" + p1tag + "</p></div> <div class=\"score2\"><p>" + score1 + "</p></div></div>");
-                }
-
-            }
-            catch (KeyNotFoundException e){
-                return;
-            }
-            
-        }
-        public static void GetSets()
-        {
-            List<int> ids = new List<int>();
-            string smashgg = S3.Globals.settings.smashgg;
-            if (smashgg == null)
+            List<int> phaseIds = new List<int>();
+            var groups = RootObject.entities.groups;
+            foreach (var group in groups)
             {
-                return;
-            }
-            else
-            {
-
-                string url = "https://api.smash.gg/tournament/" + smashgg + "/event/melee-singles?expand[0]=groups";
-                var json = new WebClient().DownloadString(url);
-                GroupData.RootObject data = JsonConvert.DeserializeObject<GroupData.RootObject>(json);
-                foreach (var group in data.entities.groups)
+                int phaseId = group.id;
+                string phaseUrl = "https://api.smash.gg/phase_group/" + phaseId + "?expand[]=sets";
+                var phaseJson = new WebClient().DownloadString(phaseUrl);
+                dynamic PhaseObject = JObject.Parse(phaseJson);
+                var sets = PhaseObject.entities.sets;
+                foreach (var set in sets)
                 {
-                    int groupid = group.id;
-                    ids.Add(groupid);
-                }
-            }
-            for (var i = 0; i < ids.Count; i++)
-            {
-                {
-                    int phaseGroupId = ids[i];
-                    string url = "https://api.smash.gg/phase_group/" + phaseGroupId + "?expand[]=sets";
-                    var jsonstring = new WebClient().DownloadString(url);
-                    SetData.RootObject data = JsonConvert.DeserializeObject<SetData.RootObject>(jsonstring);
-                    foreach (var set in data.entities.sets)
+                    if (set.streamId == streamId)
                     {
-                        int? entrant1id = set.entrant1Id;
-                        int? entrant2id = set.entrant2Id;
-                        int? winnerid = set.winnerId;
-                        int? entrant1score = set.entrant1Score;
-                        int? entrant2score = set.entrant2Score;
-                        WriteMatch(entrant1id, entrant2id, winnerid, entrant1score, entrant2score);
+                        int? entrant1 = set.entrant1Id;
+                        int? entrant2 = set.entrant2Id;
+                        int? score1 = set.entrant1Score;
+                        int? score2 = set.entrant2Score;
+                        int? completed = set.completedAt;
+                        string round = set.fullRoundText;
+
+                        Set gameSet = new Set(entrant1, entrant2, score1, score2, round);
+                        if (gameSet.isValid() && completed == null)
+                        {
+                            return gameSet;
+                        }
                     }
                 }
             }
+            return null;
+        }
+        public static List<Set> getSets(string smashgg)
+        {
+            List<Set> Sets = new List<Set>();
+            string url = "https://api.smash.gg/tournament/" + smashgg + "/event/melee-singles?expand[0]=groups";
+            var json = new WebClient().DownloadString(url);
+            dynamic RootObject = JObject.Parse(json);
+
+            List<int> phaseIds = new List<int>();
+            var groups = RootObject.entities.groups;
+            foreach(var group in groups)
+            {
+                int phaseId = group.id;
+                phaseIds.Add(phaseId);
+            }
+            for(int i = phaseIds.Count - 1; i >= 0 ; i--)
+            {
+                string phaseUrl = "https://api.smash.gg/phase_group/" + phaseIds[i] + "?expand[]=sets";
+                var phaseJson = new WebClient().DownloadString(phaseUrl);
+
+                dynamic PhaseObject = JObject.Parse(phaseJson);
+                var sets = PhaseObject.entities.sets;
+                foreach(var set in sets)
+                {
+                    int? entrant1 = set.entrant1Id;
+                    int? entrant2 = set.entrant2Id;
+                    int? score1 = set.entrant1Score;
+                    int? score2 = set.entrant2Score;
+                    int? completed = set.completedAt;
+
+                    Set gameSet = new Set(entrant1, entrant2, score1, score2, completed);
+
+
+                    if (gameSet.isValid() && completed != null)
+                    {
+                        Sets.Add(gameSet);
+                    }
+                }
+            }
+            List<Set> SortedList = Sets.OrderBy(Set => Set.completed).ToList();
+            return SortedList;
+
         }
     }
 }

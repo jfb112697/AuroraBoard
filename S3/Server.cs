@@ -30,13 +30,52 @@ namespace S3
         public string ticker4;
         public string ticker5;
         public string twitchclip;
+        public string Comm1Name;
+        public string Comm2Name;
+        public string Comm3Name;
+        public string Comm4Name;
+        public string Comm1Twitter;
+        public string Comm2Twitter;
+        public string Comm3Twitter;
+        public string Comm4Twitter;
+        public string P1TitleSE;
+        public string P2TitleSE;
+        public string P3TitleSE;
+        public string P4TitleSE;
+        public string P5TitleSE;
+        public string P6TitleSE;
+        public string P1NameSE;
+        public string P2NameSE;
+        public string P3NameSE;
+        public string P4NameSE;
+        public string P5NameSE;
+        public string P6NameSE;
+        public string Crew1Name;
+        public string Crew2Name;
+        public string Crew1P1Name;
+        public decimal Crew1P1Stock = 4;
+        public string Crew1P2Name;
+        public decimal Crew1P2Stock = 4;
+        public string Crew1P3Name;
+        public decimal Crew1P3Stock = 4;
+        public string Crew1P4Name;
+        public decimal Crew1P4Stock = 4;
+        public string Crew2P1Name;
+        public decimal Crew2P1Stock = 4;
+        public string Crew2P2Name;
+        public decimal Crew2P2Stock = 4;
+        public string Crew2P3Name;
+        public decimal Crew2P3Stock = 4;
+        public string Crew2P4Name;
+        public decimal Crew2P4Stock = 4;
+        public string countdown;
+        
     }
-
     public class Player
     {
         public string name;
-        public Character character;
-        public Sponsor sponsor;
+        public string character;
+        public string sponsor;
         public int score;
         public Flag flag;
     }

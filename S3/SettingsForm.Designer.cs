@@ -38,6 +38,9 @@
             this.CancelButton = new System.Windows.Forms.Button();
             this.smashgg = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.StreamBox = new System.Windows.Forms.ComboBox();
+            this.StreamButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerPortbox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -126,26 +129,58 @@
             // 
             // smashgg
             // 
-            this.smashgg.Location = new System.Drawing.Point(181, 100);
+            this.smashgg.Location = new System.Drawing.Point(272, 95);
             this.smashgg.Name = "smashgg";
             this.smashgg.Size = new System.Drawing.Size(84, 20);
             this.smashgg.TabIndex = 4;
+            this.smashgg.TextChanged += new System.EventHandler(this.smashgg_TextChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 103);
+            this.label2.Location = new System.Drawing.Point(121, 98);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Smash.gg Tournament Name";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(195, 142);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Stream Name";
+            // 
+            // StreamBox
+            // 
+            this.StreamBox.FormattingEnabled = true;
+            this.StreamBox.Location = new System.Drawing.Point(272, 139);
+            this.StreamBox.Name = "StreamBox";
+            this.StreamBox.Size = new System.Drawing.Size(84, 21);
+            this.StreamBox.TabIndex = 7;
+            this.StreamBox.SelectedIndexChanged += new System.EventHandler(this.StreamBox_SelectedIndexChanged);
+            // 
+            // StreamButton
+            // 
+            this.StreamButton.Location = new System.Drawing.Point(12, 110);
+            this.StreamButton.Name = "StreamButton";
+            this.StreamButton.Size = new System.Drawing.Size(75, 23);
+            this.StreamButton.TabIndex = 8;
+            this.StreamButton.Text = "Get Streams";
+            this.StreamButton.UseVisualStyleBackColor = true;
+            this.StreamButton.Click += new System.EventHandler(this.StreamButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 176);
+            this.ClientSize = new System.Drawing.Size(373, 176);
+            this.Controls.Add(this.StreamButton);
+            this.Controls.Add(this.StreamBox);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.smashgg);
             this.Controls.Add(this.CancelButton);
@@ -179,5 +214,8 @@
         private System.Windows.Forms.TextBox ColorTextBox;
         private System.Windows.Forms.TextBox smashgg;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox StreamBox;
+        private System.Windows.Forms.Button StreamButton;
     }
 }

@@ -14,5 +14,7 @@ namespace S3
         public InformationUpdate streamData;
 
         public string smashgg { get; internal set; }
+        public string StreamName { get; set; }
+        public int streamId;
     }
 }
