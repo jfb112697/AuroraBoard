@@ -400,13 +400,13 @@ namespace S3
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
         {
-            try
+            if (sponsors.ContainsKey(Player2Name.Text))
             {
-                P1Sponsor.Text = sponsors[Player1Name.Text];
+                P2Sponsor.Text = sponsors[Player2Name.Text];
             }
-            catch (Exception)
+            else
             {
-
+                P2Sponsor.Text = "";
             }
         }
 
@@ -588,13 +588,13 @@ namespace S3
 
         private void Player2Name_TextChanged(object sender, EventArgs e)
         {
-            try
+            if (sponsors.ContainsKey(Player2Name.Text))
             {
                 P2Sponsor.Text = sponsors[Player2Name.Text];
             }
-            catch (Exception)
+            else
             {
-
+                P2Sponsor.Text = "";
             }
         }
 
