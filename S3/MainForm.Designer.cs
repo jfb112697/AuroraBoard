@@ -49,7 +49,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.Player2Name = new System.Windows.Forms.TextBox();
             this.SendUpdateButton = new System.Windows.Forms.Button();
-            this.RoundNameTextbox = new System.Windows.Forms.TextBox();
+            this.Round = new System.Windows.Forms.TextBox();
             this.tournamentNameTextbox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -61,8 +61,8 @@
             this.Comm1Twitter = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.Comm2Text = new System.Windows.Forms.TextBox();
-            this.Comm1Text = new System.Windows.Forms.TextBox();
+            this.Comm2Name = new System.Windows.Forms.TextBox();
+            this.Comm1Name = new System.Windows.Forms.TextBox();
             this.SettingsButton = new System.Windows.Forms.Button();
             this.StartServer = new System.Windows.Forms.Button();
             this.UrlLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -324,12 +324,12 @@
             this.SendUpdateButton.UseVisualStyleBackColor = true;
             this.SendUpdateButton.Click += new System.EventHandler(this.SendUpdateButton_Click);
             // 
-            // RoundNameTextbox
+            // Round
             // 
-            this.RoundNameTextbox.Location = new System.Drawing.Point(6, 35);
-            this.RoundNameTextbox.Name = "RoundNameTextbox";
-            this.RoundNameTextbox.Size = new System.Drawing.Size(100, 20);
-            this.RoundNameTextbox.TabIndex = 1;
+            this.Round.Location = new System.Drawing.Point(6, 35);
+            this.Round.Name = "Round";
+            this.Round.Size = new System.Drawing.Size(100, 20);
+            this.Round.TabIndex = 1;
             // 
             // tournamentNameTextbox
             // 
@@ -343,7 +343,7 @@
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.tournamentNameTextbox);
-            this.groupBox3.Controls.Add(this.RoundNameTextbox);
+            this.groupBox3.Controls.Add(this.Round);
             this.groupBox3.Location = new System.Drawing.Point(12, 176);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(245, 100);
@@ -377,8 +377,8 @@
             this.groupBox4.Controls.Add(this.Comm1Twitter);
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.Comm2Text);
-            this.groupBox4.Controls.Add(this.Comm1Text);
+            this.groupBox4.Controls.Add(this.Comm2Name);
+            this.groupBox4.Controls.Add(this.Comm1Name);
             this.groupBox4.Location = new System.Drawing.Point(388, 176);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(245, 100);
@@ -438,19 +438,19 @@
             this.label12.TabIndex = 11;
             this.label12.Text = "Commentator 2";
             // 
-            // Comm2Text
+            // Comm2Name
             // 
-            this.Comm2Text.Location = new System.Drawing.Point(124, 32);
-            this.Comm2Text.Name = "Comm2Text";
-            this.Comm2Text.Size = new System.Drawing.Size(100, 20);
-            this.Comm2Text.TabIndex = 0;
+            this.Comm2Name.Location = new System.Drawing.Point(124, 32);
+            this.Comm2Name.Name = "Comm2Name";
+            this.Comm2Name.Size = new System.Drawing.Size(100, 20);
+            this.Comm2Name.TabIndex = 0;
             // 
-            // Comm1Text
+            // Comm1Name
             // 
-            this.Comm1Text.Location = new System.Drawing.Point(6, 35);
-            this.Comm1Text.Name = "Comm1Text";
-            this.Comm1Text.Size = new System.Drawing.Size(97, 20);
-            this.Comm1Text.TabIndex = 0;
+            this.Comm1Name.Location = new System.Drawing.Point(6, 35);
+            this.Comm1Name.Name = "Comm1Name";
+            this.Comm1Name.Size = new System.Drawing.Size(97, 20);
+            this.Comm1Name.TabIndex = 0;
             // 
             // SettingsButton
             // 
@@ -626,6 +626,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "MainForm";
             this.Text = "WorldStar Scoreboard";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -659,7 +660,7 @@
         internal System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox Player2Name;
         private System.Windows.Forms.Button SendUpdateButton;
-        private System.Windows.Forms.TextBox RoundNameTextbox;
+        private System.Windows.Forms.TextBox Round;
         private System.Windows.Forms.TextBox tournamentNameTextbox;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label10;
@@ -667,8 +668,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox Comm2Text;
-        private System.Windows.Forms.TextBox Comm1Text;
+        private System.Windows.Forms.TextBox Comm2Name;
+        private System.Windows.Forms.TextBox Comm1Name;
         private System.Windows.Forms.ComboBox FlagsCombo;
         private System.Windows.Forms.ComboBox FlagsComboP2;
         private System.Windows.Forms.Button SettingsButton;

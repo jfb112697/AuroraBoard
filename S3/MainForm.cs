@@ -15,14 +15,19 @@ using System.Net;
 using OBSWebsocketDotNet;
 using System.Threading;
 using System.Text.RegularExpressions;
+using S22.Xmpp;
+using S22.Xmpp.Client;
+using S22.Xmpp.Core;
+using S22.Xmpp.Im;
+
 namespace S3
 {
     public partial class MainForm : Form
     {
         protected OBSWebsocket _obs;
         private NancyHost hostg;
-        
-        
+        private XmppClient client = new XmppClient("im.koderoot.net", "worldstarhitbot", "testxmpp", 5222, true, null);
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,11 +35,83 @@ namespace S3
             Globals.CurrentInformationUpdate = new InformationUpdate();
             Globals.CurrentInformationUpdate.Player1 = new Player();
             Globals.CurrentInformationUpdate.Player2 = new Player();
-            Globals.CurrentInformationUpdate.Player1.name = "EIREXE";
+            Globals.CurrentInformationUpdate.Player1.name = "Red Squirrel";
             Globals.CurrentInformationUpdate.Player2.name = "BoastingToast";
             _obs.OnRecordingStateChange += onRecordingStateChange;
             btnToggleRecording.Hide();
+            client = new XmppClient("im.koderoot.net", "worldstarhitbot", "testxmpp", 5222, true, null);
+            MessageBox.Show(client.Connected + "");
+            if (client.Connected == true)
+            {
+                client.Close();
+            }
+           
+            
+            client.Message += OnNewMessage;
+            client.Connect();
+            client.SendMessage("worldstarhitbox@im.konderoot.net", "testttt", null, null, MessageType.Normal, null);
+
+            
+            client.SetStatus(new Status(Availability.Online, null, 0));
+            MessageBox.Show(client.Connected + "");
         }
+
+        void OnNewMessage(object sender, S22.Xmpp.Im.MessageEventArgs e)
+        {
+            string resID = e.Jid.Resource;
+            string domain = e.Jid.Domain;
+            string jid = e.Jid.ToString().Replace(resID, "");
+            jid = jid.Replace(domain, "");
+            jid = jid.Replace("@/", "");
+            string mes = e.Message.Body;
+            //MessageBox.Show(mes + " : " + jid);
+            if(mes == "sendupdate")
+            {
+                SendUpdateButton.Invoke((MethodInvoker)(() => SendUpdateButton.PerformClick()));
+            }
+            if (mes.Contains(":"))
+            {
+                string[] elem = mes.Split(':');
+                foreach (Control control in Controls)
+                {
+                    Console.WriteLine(control.Name);
+                    if(control.Name == elem[0])
+                    {
+                        if(control.GetType().ToString() == "System.Windows.Forms.NumericUpDown")
+                        {
+                            NumericUpDown upDown = (NumericUpDown)control;
+                            upDown.Invoke((MethodInvoker)(() => upDown.Value = int.Parse(elem[1])));
+                        }
+                        else
+                        {
+                            control.Invoke((MethodInvoker)(() => control.Text = elem[1]));
+                        }
+                      
+                    }
+                    else if (control.GetType().ToString() == "System.Windows.Forms.GroupBox")
+                    {
+                        foreach(Control gboxC in control.Controls)
+                        {
+                            if (gboxC.Name == elem[0])
+                            {
+                                Console.WriteLine(gboxC.Name);
+                                if (gboxC.GetType().ToString() == "System.Windows.Forms.NumericUpDown")
+                                {
+                                    NumericUpDown upDown = (NumericUpDown)gboxC;
+                                    upDown.Invoke((MethodInvoker)(() => upDown.Value = int.Parse(elem[1])));
+                                }
+                                else
+                                {
+                                    gboxC.Invoke((MethodInvoker)(() => gboxC.Text = elem[1]));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            MessageBox.Show(mes);
+        }
+
 
         private void onRecordingStateChange(OBSWebsocket sender, OutputState newState)
         {
@@ -81,6 +158,10 @@ namespace S3
         }
         private void updateName(string name)
         {
+            if(System.IO.File.Exists("names.txt") == false)
+            {
+                System.IO.File.Create("names.txt");
+            }
             using (StreamReader sr = File.OpenText("names.txt"))
             {
                 string[] lines = File.ReadAllLines("names.txt");
@@ -145,12 +226,12 @@ namespace S3
             Globals.CurrentInformationUpdate.Player1.sponsor = P1Sponsor.Text;
             Globals.CurrentInformationUpdate.Player2.sponsor = P2Sponsor.Text;
             Globals.CurrentInformationUpdate.tournamentName = tournamentNameTextbox.Text;
-            Globals.CurrentInformationUpdate.round = RoundNameTextbox.Text;
-            Globals.CurrentInformationUpdate.caster = Comm2Text.Text;
-            Globals.CurrentInformationUpdate.streamer = Comm1Text.Text;
-            Globals.CurrentInformationUpdate.Comm1Name = Comm1Text.Text;
+            Globals.CurrentInformationUpdate.round = Round.Text;
+            Globals.CurrentInformationUpdate.caster = Comm2Name.Text;
+            Globals.CurrentInformationUpdate.streamer = Comm1Name.Text;
+            Globals.CurrentInformationUpdate.Comm1Name = Comm1Name.Text;
             Globals.CurrentInformationUpdate.Comm1Twitter = Comm1Twitter.Text;
-            Globals.CurrentInformationUpdate.Comm2Name = Comm2Text.Text;
+            Globals.CurrentInformationUpdate.Comm2Name = Comm2Name.Text;
             Globals.CurrentInformationUpdate.Comm2Twitter = Comm2Twitter.Text;
             isEmpty = false;
         }
@@ -262,7 +343,7 @@ namespace S3
             Player2Score.Text = Globals.settings.streamData.Player2.score.ToString();
             FlagsCombo.Text = Globals.settings.streamData.Player1.flag.name;
             FlagsComboP2.Text = Globals.settings.streamData.Player2.flag.name;
-            RoundNameTextbox.Text = Globals.settings.streamData.round;
+            Round.Text = Globals.settings.streamData.round;
             tournamentNameTextbox.Text = Globals.settings.streamData.tournamentName;
             SendUpdate();
         }
@@ -379,7 +460,7 @@ namespace S3
                     string videoName = Globals.CurrentInformationUpdate.round + " " + player1 + " vs. " + player2 + " " + Globals.CurrentInformationUpdate.tournamentName;
                 });
         }
-        private void button1_Click(object sender, EventArgs e)
+        public void fullReset()
         {
             Player1Score.Value = 0;
             P1Sponsor.Text = "";
@@ -387,15 +468,28 @@ namespace S3
             Player2Score.Value = 0;
             Player1Name.Text = "";
             Player2Name.Text = "";
-            RoundNameTextbox.Text = "";
+            Round.Text = "";
             if (obs == true && getRecordingStatus() == true)
             {
                 _obs.ToggleRecording();
                 Thread resetThread = new Thread(reset);
                 resetThread.Start();
             }
-            isEmpty = true;
-            
+        }
+
+        public void changePlayer1Name(string name)
+        {
+            Player1Name.Text = name;
+        }
+
+        public void changePlayer2Name(string name)
+        {
+            Player2Name.Text = name;
+        }
+        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            fullReset();            
         }
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
@@ -416,7 +510,7 @@ namespace S3
         }
         private void Player2Name_Enter(object sender, EventArgs e)
         {
-            RoundNameTextbox.SelectAll();
+            Round.SelectAll();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -613,7 +707,7 @@ namespace S3
                 Player2Name.Text = tags[1];
                 Player1Score.Value = (int)set.score1;
                 Player2Score.Value = (int)set.score2;
-                RoundNameTextbox.Text = set.round;
+                Round.Text = set.round;
 
                 Globals.CurrentInformationUpdate.round = set.round;
                 Globals.CurrentInformationUpdate.Player1.name = tags[0];
@@ -624,10 +718,15 @@ namespace S3
         }
         private void smashggCheck_CheckedChanged(object sender, EventArgs e)
         {
-            TimerCallback tmCallback = updateSmashgg();
+            /*TimerCallback tmCallback = updateSmashgg();
             System.Threading.Timer timer = new System.Threading.Timer(tmCallback, "test", 1000, 1000);
             Console.WriteLine("Press any key to exit the sample");
-            Console.ReadLine();
+            Console.ReadLine();*/
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            client.Close();
         }
     }
 }
