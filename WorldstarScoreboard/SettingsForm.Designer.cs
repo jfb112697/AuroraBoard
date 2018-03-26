@@ -31,9 +31,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ServerPortbox = new System.Windows.Forms.NumericUpDown();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ColorTextBox = new System.Windows.Forms.TextBox();
-            this.TintingEnableCheckbox = new System.Windows.Forms.CheckBox();
             this.OkButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.smashgg = new System.Windows.Forms.TextBox();
@@ -41,8 +38,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.StreamBox = new System.Windows.Forms.ComboBox();
             this.StreamButton = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.websocketPassword = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerPortbox)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,38 +80,9 @@
             this.ServerPortbox.Size = new System.Drawing.Size(52, 20);
             this.ServerPortbox.TabIndex = 1;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.ColorTextBox);
-            this.groupBox2.Controls.Add(this.TintingEnableCheckbox);
-            this.groupBox2.Location = new System.Drawing.Point(169, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(97, 73);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tinting";
-            // 
-            // ColorTextBox
-            // 
-            this.ColorTextBox.Location = new System.Drawing.Point(7, 38);
-            this.ColorTextBox.Name = "ColorTextBox";
-            this.ColorTextBox.Size = new System.Drawing.Size(84, 20);
-            this.ColorTextBox.TabIndex = 1;
-            // 
-            // TintingEnableCheckbox
-            // 
-            this.TintingEnableCheckbox.AutoSize = true;
-            this.TintingEnableCheckbox.Location = new System.Drawing.Point(6, 19);
-            this.TintingEnableCheckbox.Name = "TintingEnableCheckbox";
-            this.TintingEnableCheckbox.Size = new System.Drawing.Size(90, 17);
-            this.TintingEnableCheckbox.TabIndex = 0;
-            this.TintingEnableCheckbox.Text = "Enable tinting";
-            this.TintingEnableCheckbox.UseVisualStyleBackColor = true;
-            this.TintingEnableCheckbox.CheckedChanged += new System.EventHandler(this.TintingEnableCheckbox_CheckedChanged);
-            // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(12, 139);
+            this.OkButton.Location = new System.Drawing.Point(12, 94);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 2;
@@ -119,7 +92,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(88, 139);
+            this.CancelButton.Location = new System.Drawing.Point(12, 123);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 3;
@@ -129,7 +102,7 @@
             // 
             // smashgg
             // 
-            this.smashgg.Location = new System.Drawing.Point(272, 95);
+            this.smashgg.Location = new System.Drawing.Point(9, 36);
             this.smashgg.Name = "smashgg";
             this.smashgg.Size = new System.Drawing.Size(84, 20);
             this.smashgg.TabIndex = 4;
@@ -138,7 +111,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(121, 98);
+            this.label2.Location = new System.Drawing.Point(6, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 13);
             this.label2.TabIndex = 5;
@@ -148,7 +121,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(195, 142);
+            this.label3.Location = new System.Drawing.Point(6, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 13);
             this.label3.TabIndex = 6;
@@ -157,7 +130,7 @@
             // StreamBox
             // 
             this.StreamBox.FormattingEnabled = true;
-            this.StreamBox.Location = new System.Drawing.Point(272, 139);
+            this.StreamBox.Location = new System.Drawing.Point(9, 73);
             this.StreamBox.Name = "StreamBox";
             this.StreamBox.Size = new System.Drawing.Size(84, 21);
             this.StreamBox.TabIndex = 7;
@@ -165,7 +138,7 @@
             // 
             // StreamButton
             // 
-            this.StreamButton.Location = new System.Drawing.Point(12, 110);
+            this.StreamButton.Location = new System.Drawing.Point(119, 38);
             this.StreamButton.Name = "StreamButton";
             this.StreamButton.Size = new System.Drawing.Size(75, 23);
             this.StreamButton.TabIndex = 8;
@@ -173,19 +146,56 @@
             this.StreamButton.UseVisualStyleBackColor = true;
             this.StreamButton.Click += new System.EventHandler(this.StreamButton_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.StreamButton);
+            this.groupBox3.Controls.Add(this.smashgg);
+            this.groupBox3.Controls.Add(this.StreamBox);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Location = new System.Drawing.Point(152, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 105);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "SmashGG";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.websocketPassword);
+            this.groupBox2.Location = new System.Drawing.Point(359, 13);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(147, 100);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "OBS";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(136, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "OBS Websocket Password";
+            // 
+            // websocketPassword
+            // 
+            this.websocketPassword.Location = new System.Drawing.Point(6, 35);
+            this.websocketPassword.Name = "websocketPassword";
+            this.websocketPassword.Size = new System.Drawing.Size(84, 20);
+            this.websocketPassword.TabIndex = 9;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 176);
-            this.Controls.Add(this.StreamButton);
-            this.Controls.Add(this.StreamBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.smashgg);
+            this.ClientSize = new System.Drawing.Size(517, 164);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OkButton);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.Name = "SettingsForm";
@@ -195,10 +205,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerPortbox)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -207,15 +218,16 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown ServerPortbox;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox TintingEnableCheckbox;
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.TextBox ColorTextBox;
         private System.Windows.Forms.TextBox smashgg;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox StreamBox;
         private System.Windows.Forms.Button StreamButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox websocketPassword;
     }
 }

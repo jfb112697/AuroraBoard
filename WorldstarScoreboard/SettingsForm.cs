@@ -18,38 +18,14 @@ namespace S3
         public SettingsForm()
         {
             InitializeComponent();
-            if (!Globals.settings.tintEnabled)
-            {
-                ColorTextBox.Enabled = false;
-
-            }
-            else
-            {
-
-                TintingEnableCheckbox.Checked = true;
-
-            }
             ServerPortbox.Value = Globals.settings.serverPort;
-            ColorTextBox.Text = Globals.settings.tintColor;
         }
-
-        private void TintingEnableCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (TintingEnableCheckbox.Checked)
-            {
-                ColorTextBox.Enabled = true;
-            }
-            else
-            {
-                ColorTextBox.Enabled = false;
-            }
-        }
+        
 
         private void OkButton_Click(object sender, EventArgs e)
         {
             Globals.settings.serverPort = Convert.ToInt32(ServerPortbox.Value);
-            Globals.settings.tintColor = ColorTextBox.Text;
-            Globals.settings.tintEnabled = TintingEnableCheckbox.Checked;
+            Globals.settings.websocketPassword = websocketPassword.Text;
             Close();
         }
 

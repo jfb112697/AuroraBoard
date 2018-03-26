@@ -40,7 +40,6 @@ namespace S3
             _obs.OnRecordingStateChange += onRecordingStateChange;
             btnToggleRecording.Hide();
             client = new XmppClient("im.koderoot.net", "worldstarhitbot", "testxmpp", 5222, true, null);
-            MessageBox.Show(client.Connected + "");
             if (client.Connected == true)
             {
                 client.Close();
@@ -53,7 +52,6 @@ namespace S3
 
             
             client.SetStatus(new Status(Availability.Online, null, 0));
-            MessageBox.Show(client.Connected + "");
         }
 
         void OnNewMessage(object sender, S22.Xmpp.Im.MessageEventArgs e)
@@ -193,21 +191,18 @@ namespace S3
             if(P1Sponsor.Text != "")
             {
                 p1name = P1Sponsor.Text + " | " + Player1Name.Text;
-                MessageBox.Show(p1name);
-                try
+                if (!sponsors.ContainsKey(Player1Name.Text))
                 {
                     sponsors.Add(Player1Name.Text, P1Sponsor.Text);
                 }
-                catch (System.ArgumentException) { }
             }
             if (P2Sponsor.Text != "")
             {
                 p2name = P2Sponsor.Text + " | " + Player2Name.Text;
-                try
+                if (!sponsors.ContainsKey(Player2Name.Text))
                 {
                     sponsors.Add(Player2Name.Text, P2Sponsor.Text);
                 }
-                catch (System.ArgumentException) { }
             }
 
             updateName(Player1Name.Text);
@@ -494,13 +489,13 @@ namespace S3
 
         private void Player1Name_TextChanged(object sender, EventArgs e)
         {
-            if (sponsors.ContainsKey(Player2Name.Text))
+            if (sponsors.ContainsKey(Player1Name.Text) && Player1Name.Text != "")
             {
-                P2Sponsor.Text = sponsors[Player2Name.Text];
+                P1Sponsor.Text = sponsors[Player1Name.Text];
             }
             else
             {
-                P2Sponsor.Text = "";
+                P1Sponsor.Text = "";
             }
         }
 
@@ -535,8 +530,9 @@ namespace S3
             btnToggleRecording.Show();
             try
             {
-                _obs.Connect("ws://127.0.0.1:4444", "password");
+                _obs.Connect("ws://127.0.0.1:4444", Globals.settings.websocketPassword);
                 obs = true;
+                button6.Hide();
             }
             catch (AuthFailureException)
             {
@@ -682,7 +678,7 @@ namespace S3
 
         private void Player2Name_TextChanged(object sender, EventArgs e)
         {
-            if (sponsors.ContainsKey(Player2Name.Text))
+            if (sponsors.ContainsKey(Player2Name.Text) && Player2Name.Text != "")
             {
                 P2Sponsor.Text = sponsors[Player2Name.Text];
             }

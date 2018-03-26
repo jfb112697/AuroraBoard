@@ -15,6 +15,7 @@ namespace S3
 
         public string smashgg { get; internal set; }
         public string StreamName { get; set; }
+        public string websocketPassword { get; set; }
         public int streamId;
     }
 }

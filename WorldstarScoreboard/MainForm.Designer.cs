@@ -523,17 +523,17 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(291, 289);
+            this.button6.Location = new System.Drawing.Point(330, 358);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(87, 23);
             this.button6.TabIndex = 22;
-            this.button6.Text = "Show OBS Controls";
+            this.button6.Text = "Connect OBS";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // btnToggleRecording
             // 
-            this.btnToggleRecording.Location = new System.Drawing.Point(191, 289);
+            this.btnToggleRecording.Location = new System.Drawing.Point(269, 289);
             this.btnToggleRecording.Name = "btnToggleRecording";
             this.btnToggleRecording.Size = new System.Drawing.Size(94, 23);
             this.btnToggleRecording.TabIndex = 23;
@@ -597,6 +597,7 @@
             this.smashggCheck.Text = "Smash GG Automation";
             this.smashggCheck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.smashggCheck.UseVisualStyleBackColor = true;
+            this.smashggCheck.Visible = false;
             this.smashggCheck.CheckedChanged += new System.EventHandler(this.smashggCheck_CheckedChanged);
             // 
             // MainForm
