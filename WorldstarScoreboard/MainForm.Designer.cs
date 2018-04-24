@@ -68,8 +68,8 @@
             this.UrlLinkLabel = new System.Windows.Forms.LinkLabel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.p1win = new System.Windows.Forms.Button();
+            this.p2win = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.btnToggleRecording = new System.Windows.Forms.Button();
             this.showSets = new System.Windows.Forms.Button();
@@ -501,25 +501,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // p1win
             // 
-            this.button3.Location = new System.Drawing.Point(176, 137);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "P1 Win";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.p1win.Location = new System.Drawing.Point(176, 137);
+            this.p1win.Name = "p1win";
+            this.p1win.Size = new System.Drawing.Size(75, 23);
+            this.p1win.TabIndex = 20;
+            this.p1win.Text = "P1 Win";
+            this.p1win.UseVisualStyleBackColor = true;
+            this.p1win.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // p2win
             // 
-            this.button4.Location = new System.Drawing.Point(403, 145);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 21;
-            this.button4.Text = "P2 Win";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.p2win.Location = new System.Drawing.Point(403, 145);
+            this.p2win.Name = "p2win";
+            this.p2win.Size = new System.Drawing.Size(75, 23);
+            this.p2win.TabIndex = 21;
+            this.p2win.Text = "P2 Win";
+            this.p2win.UseVisualStyleBackColor = true;
+            this.p2win.Click += new System.EventHandler(this.button4_Click);
             // 
             // button6
             // 
@@ -613,8 +613,8 @@
             this.Controls.Add(this.showSets);
             this.Controls.Add(this.btnToggleRecording);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.p2win);
+            this.Controls.Add(this.p1win);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.UrlLinkLabel);
@@ -678,8 +678,8 @@
         private System.Windows.Forms.LinkLabel UrlLinkLabel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button p1win;
+        private System.Windows.Forms.Button p2win;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btnToggleRecording;

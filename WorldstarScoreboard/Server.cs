@@ -91,10 +91,6 @@ namespace S3
                 response.ContentType = "application/json";
                 return response;
             };
-            Get["/scoreboard"] = paramaters =>
-            {
-                return Response.AsFile("Content/index.html", "text/html");
-            };
         }
 
         public static NancyHost Run(Uri uri)

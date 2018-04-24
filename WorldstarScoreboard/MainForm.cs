@@ -237,6 +237,11 @@ namespace S3
             Player1Name.Text = p2name;
             Player2Name.Text = p1name;
 
+            string p1sponsor = P1Sponsor.Text;
+            string p2sponsor = P2Sponsor.Text;
+            P1Sponsor.Text = p2sponsor;
+            P2Sponsor.Text = p1sponsor;
+
             int p1score = Decimal.ToInt32(Player1Score.Value);
             int p2score = Decimal.ToInt32(Player2Score.Value);
             Player1Score.Value = p2score;
@@ -371,7 +376,10 @@ namespace S3
                         name = name.Remove(0, 1);
                         sponsors.Add(name, sponsor);
                     }
-                    entranthash.Add(key, name);
+                    if (!entranthash.ContainsKey(key))
+                    {
+                        entranthash.Add(key, name);
+                    }
                     File.AppendAllText("names.txt", name + Environment.NewLine);
                 }
             }
@@ -496,6 +504,14 @@ namespace S3
             else
             {
                 P1Sponsor.Text = "";
+            }
+            if(Player1Name.Text != "")
+            {
+                p1win.Text = Player1Name.Text = " Win";   
+            }
+            else
+            {
+                p1win.Text = "P1 Win";
             }
         }
 
@@ -685,6 +701,14 @@ namespace S3
             else
             {
                 P2Sponsor.Text = "";
+            }
+            if(Player2Name.Text != "")
+            {
+                p2win.Text = Player2Name.Text + " Win";
+            }
+            else
+            {
+                p2win.Text = "P2 Win";
             }
         }
 
